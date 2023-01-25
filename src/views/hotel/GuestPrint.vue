@@ -7,7 +7,6 @@
        padding: 0 1rem;">
            <div style="width: 33.33%;
                            display: flex;">
-                  <img src="formdata2.pic_document" alt="" width="180px">   
            </div>
            <div style="text-align: center;
                        width: 33.33%;"><img width="180px" src="../../assets/1211.jpg" alt="">
