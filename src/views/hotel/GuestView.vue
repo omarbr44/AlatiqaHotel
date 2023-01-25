@@ -1,0 +1,230 @@
+<template>
+ 
+<div class="blur" v-if="delete_act">
+ 
+</div>
+
+<div class="mesa-con" v-if="delete_act">
+
+ <div class="squa">
+    <h3 class="h3-t">تنبيه</h3>
+    <p>هل انت متأكد من حذف هذا الحقل</p>
+    <div class="flex ff"><button @click="Mdelete" class=" bb dele">حذف</button>
+    <button class="bb canc" @click="cancal">الغاء</button>
+    </div>
+  </div>
+</div>
+
+  <div class="container" style="direction:rtl">
+
+
+<div class="mb-3 input-in-con ">
+  <input type="date" class="form-control half ltr auto " id="exampleFormControlInput1" v-model="DateFilter">
+<button type="button" class="btn btn-primary green_but" @click="filter()"> تاريخ الدخول</button>
+</div>
+<div class="mb-3 input-in-con " v-if="user.is_staff">
+  <select class="form-control half ltr auto " id="exampleFormControlInput1" v-model="HotelFilter" >
+    <option disabled >اختر الفندق</option> 
+    <option v-for="hotel in formdata3" :key="hotel.id" :value="hotel.id">{{ hotel.name }}</option> 
+  </select>
+<button  type="button" class="btn btn-primary green_but" @click="filter()">اختيار الفندق</button>
+</div>
+      <h3 class="heading" style="display:initial;margin-left:2rem">النزلاء</h3>
+      <form style="display:initial;">
+ <router-link class="mx-2" to="/AddGuest" v-if="user.is_woner"> <button  class="btn btn-primary">اضافة</button> </router-link>
+ <router-link :to="{ name: 'GuestPrint', params: { id: hotel_id} ,query:{createAt:DateFilter}}"> 
+  <button  class="btn btn-primary">طباعة</button>
+</router-link>
+      </form>
+<div class="container menu">
+<div class="table-responsive">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"> </th>
+      <th scope="col"> الترتيب</th>
+      <th scope="col"> الاسم</th>
+      <th scope="col" class="hidee">  الرقم</th>
+      <th scope="col">الفندق </th>
+      <th scope="col" class="hidee">المديرية </th>
+      <th scope="col"> </th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr v-for="keey in formdata2" :key="keey.id" >
+      <router-link class="star_fa" :to="{ name: 'CompanionView',  params: { idd: keey.id}}"> <button   class="icon-button orange" > 
+              <img style="width: 1.4rem;" src="../../assets/g.png" alt="" class="icon-small">
+</button> </router-link> 
+      <th scope="row" >{{keey.id}}</th>
+      <td>       {{keey.name}} </td>
+      <td class="hidee">{{keey.phone}}</td>
+      <td>{{keey.hotel_name}} </td>
+      <td class="hidee">{{keey.directorates_name}} </td>
+ 
+      <div class="right">
+        <form @submit.prevent="deelete(keey.id)">
+          <button  class="icon-button red"> <img src="../../assets/x.png" alt="" class="icon-small">
+</button>
+        </form>
+         <router-link :to="{ name: 'updategue', params: { idd: keey.id}}"> <button   class="icon-button orange" > 
+              <img src="../../assets/edit.png" alt="" class="icon-small">
+</button> </router-link>
+<!--
+<router-link :to="{ name: 'GuestPrint', params: { id: keey.id}}"> <button   class="icon-button orange" > 
+</button> </router-link> -->
+
+</div> 
+
+    </tr>
+    
+   
+  </tbody>
+</table>
+
+</div>
+  
+
+   
+  
+ 
+</div>
+</div>
+
+
+           
+
+
+  
+
+
+</template>
+
+<script>
+
+import geturl from '../../composables/geturl'
+import { useUserStore } from '@/stores/user'
+
+export default {
+name: 'GuestView',
+data(){
+  return{
+    formdata:[],
+     formdata2:[],
+     formdata3:[],
+     work:false,
+      id_del: 0,
+     delete_act : false,
+     delete_go : false,
+     DateFilter: '',
+     HotelFilter: '',
+     hotel_id: 0,
+     user : useUserStore()
+
+    
+  }
+},
+mounted() {
+    if(this.user.is_staff){
+
+  fetch(geturl()+"hotels/hotel/", {
+      
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": "Token "+this.user.token
+      },
+      })
+      .then(res => res.json())
+      .then(data => {
+           this.formdata3 = data
+           console.log(data)
+      })
+    
+    }
+  fetch(geturl()+"guest/guest/?create_at="+this.DateFilter+"&hotel="+this.user.hotel, {
+      
+        headers: {"Content-Type": "application/json",
+      "authorization": "Token "+this.user.token
+},      })
+      .then(res => res.json())
+      .then(data => {this.formdata2 = data
+           this.hotel_id = this.formdata2[0].hotel
+      })
+      
+     
+      
+    },
+    methods: {
+
+        filter(){
+          fetch(geturl()+"guest/guest/?create_at="+this.DateFilter+"&hotel="+this.HotelFilter, {
+      
+            headers: {"Content-Type": "application/json",
+      "authorization": "Token "+this.user.token
+},      })
+      .then(res => res.json())
+      .then(data => {
+        this.formdata2 = data
+      })
+        },
+
+      deelete(id){
+ this.id_del = id
+        this.delete_act = true
+
+      },
+    
+      cancal(){
+         this.delete_act = false
+      },
+
+       Mdelete(){
+    fetch(geturl()+"guest/guest/"+this.id_del+'/', {
+         method: "DELETE",
+         headers: {"Content-Type": "application/json",
+      "authorization": "Token "+this.user.token
+},      }).then(res => {
+        if(res.ok){
+         this.$router.go()
+        }
+      })      }
+
+
+      }
+
+      
+    }
+
+</script>
+
+<style>
+.star_fa{
+  margin: 0;
+    padding: 0 !important;
+     position: inherit; 
+}
+.star{
+  margin: 0;
+  padding: 0; 
+}
+
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+
+.auto{
+  width: 50%;
+  margin-left: 1rem
+}
+
+</style>
