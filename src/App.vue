@@ -91,6 +91,8 @@ const user = useUserStore()
     router.currentRoute.value.name == 'GuestPrintForOwn'
     || 
     router.currentRoute.value.name == 'ReportPrint'
+    || 
+    router.currentRoute.value.name == '_404'
      )
        route_name.value = false
     else

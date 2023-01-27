@@ -32,6 +32,7 @@ import ReportPrint from '../views/hotel/ReportPrint.vue'
 import GuestPrintForOwn from '../views/hotel/GuestPrintForOwn.vue'
 import Signup from '../views/hotel/Signup.vue'
 import Log_in from '../views/hotel/Log_in.vue'
+import _404 from '../views/hotel/_404.vue'
 
 
 const router = createRouter({
@@ -235,6 +236,11 @@ const router = createRouter({
       component: updatereport,
       props: true,
       meta: {requiresAuth: true}
+    },
+    {
+      path: '/:catchAll(.*)', 
+      name: '_404',
+      component: _404,
     },
 
   ],

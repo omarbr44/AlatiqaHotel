@@ -114,7 +114,8 @@
                </div>
          <div style="text-align: right; padding-right: 1rem;">
            
-     <span> 777777777 : واتساب -</span>
+          <span> 774220772 - 715991480 
+: واتساب -</span>
             <br/>
      <span> info@alatiqa.com : ايميل -</span>
              <br/>
