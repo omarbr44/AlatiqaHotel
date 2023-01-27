@@ -96,7 +96,6 @@ data(){
   }
 },
 mounted() {
-  console.log('jjj')
      fetch(geturl()+"guest/companion/?guest="+this.idd, {
       
       headers: {"Content-Type": "application/json",
@@ -125,8 +124,7 @@ mounted() {
       "authorization": "Token "+this.user.token
 },      }).then(res => {
         if(res.ok){
-          this.$router.push({name:'CompanionView', params: { idd: this.idd} })
-        //  this.$router.go(-1)
+        this.$router.go()
         }
       })      }
       
