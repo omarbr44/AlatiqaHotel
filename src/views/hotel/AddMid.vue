@@ -37,7 +37,10 @@
 </div>
 </div>
 <div class="flex last">
-  <button class="btn btn-primary">اضافة</button>
+  <button class="btn btn-primary">
+    <looading v-if="load"/>
+    <span v-else>اضافة</span>
+  </button>
 </div>
       </form>
 
@@ -50,9 +53,11 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name: "AddMid",
+components:{looading},
 data(){
   return{
     formdata:{
@@ -62,7 +67,7 @@ data(){
     },
       temgovernorate: '',
      formdata2:[],
-     work: false,
+     load: false,
      err:null,
      user : useUserStore()
 
@@ -71,6 +76,8 @@ data(){
 },
 methods: {
     postinfo(){
+      this.load = true
+
     this.formdata2 = this.formdata2.filter((e) => {
         return e.name === this.temgovernorate
       })
@@ -87,7 +94,10 @@ methods: {
       body: JSON.stringify(this.formdata)
       })
       .then(res => res.json())
-      .then(data => {if(data.error)
+      .then(data => {
+        this.load = false
+
+        if(data.error)
       this.err = data.error.details
       else
             this.$router.push({name:'MidView' })

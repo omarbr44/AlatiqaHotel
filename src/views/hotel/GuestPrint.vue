@@ -1,6 +1,9 @@
 <template >
   <img class="print_back" src="../../assets/logo1.jpg" alt="">
-<div class="containerr">
+
+  <looading v-if="load"/>
+
+<div v-else class="containerr">
     <div v-if="formdata2"  style="font-family: auto;" class="printc">
      <div style="display:flex ;justify-content: space-between;border-bottom: 2px solid black; margin-bottom: 1rem;
      margin-top: 1.5rem;
@@ -14,10 +17,16 @@
        <div style="text-align: center;
     width: 33.33%;
     display: flex;
-    justify-content: end;"><p style="font-size: 1.5rem;">الجمهورية اليمنية
-           <br/>
-           م/ حضرموت
-       </p></div>
+    justify-content: end;"><p style="font-size: 0.9rem;">
+   الجمهورية اليمنية
+        <br/>
+وزارة الداخلية
+             <br/>
+              ادارة امن وشرطة م/ حضرموت للوادي والصحراء
+             <br/>
+الشرطة السياحية 
+       </p>
+      </div>
    
        </div>
       <div style="display: flex;
@@ -116,6 +125,7 @@
    import { useRoute } from 'vue-router';
    import moment from 'moment'
    import { useUserStore } from '@/stores/user'
+   import looading from '@/components/looading.vue'
 
    
  const user = useUserStore()
@@ -131,10 +141,8 @@
    const yyyy = date.getFullYear()
    const Simple_date = mm + '/' + dd + '/' + yyyy
   
-   const getIn = ref('')
-   const getOut = ref('')
+  const load = ref(true)
    onMounted(()=>{
-         
          
     // get guest
            fetch(geturl()+"guest/print/?create_at="+route.query.createAt+"&hotel="+route.params.id, {
@@ -144,6 +152,7 @@
 },           })
            .then(res => res.json())
            .then(data => {formdata2.value = data
+            load.value = false
            })
         
    

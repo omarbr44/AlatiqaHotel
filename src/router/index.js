@@ -22,13 +22,14 @@ import AddCompanion from '../views/hotel/AddCompanion.vue'
 import CompanionView from '../views/hotel/CompanionView.vue'
 import AddReport from '../views/hotel/AddReport.vue'
 import ReportView from '../views/hotel/ReportView.vue'
-import updateCom from '../views/hotel/updateCom.vue'
 import updatereport from '../views/hotel/updatereport.vue'
 import AddBlackList from '../views/hotel/AddBlackList.vue'
 import formslot from '../views/hotel/formslot.vue'
 import BlackListView from '../views/hotel/BlackListView.vue'
 import updateBlackList from '../views/hotel/updateBlackList.vue'
 import GuestPrint from '../views/hotel/GuestPrint.vue'
+import ReportPrint from '../views/hotel/ReportPrint.vue'
+import GuestPrintForOwn from '../views/hotel/GuestPrintForOwn.vue'
 import Signup from '../views/hotel/Signup.vue'
 import Log_in from '../views/hotel/Log_in.vue'
 
@@ -61,6 +62,20 @@ const router = createRouter({
       path: '/GuestPrint/:id', 
       name: 'GuestPrint',
       component: GuestPrint,
+      props:true,
+      meta: {requiresAuth: true}
+  },
+    {
+      path: '/ReportPrint/:id', 
+      name: 'ReportPrint',
+      component: ReportPrint,
+      props:true,
+      meta: {requiresAuth: true}
+  },
+    {
+      path: '/GuestPrintForOwn/:id', 
+      name: 'GuestPrintForOwn',
+      component: GuestPrintForOwn,
       props:true,
       meta: {owner: true}
   },
@@ -98,7 +113,7 @@ const router = createRouter({
       path: '/HotelView',
       name: 'HotelView',
       component: HotelView,
-      meta: {owner: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/CityView',

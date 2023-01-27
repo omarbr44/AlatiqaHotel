@@ -1,5 +1,4 @@
 
-
 <template>
  
 
@@ -121,7 +120,10 @@
 </div>
 </div>
 <div class="flex last">
-  <button  class="btn btn-primary">اضافة</button>
+  <button  class="btn btn-primary">  
+    <looading v-if="load"/>
+    <span v-else>اضافة</span>
+  </button>
 </div>
       </form>
 
@@ -139,9 +141,11 @@
 
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name: "AddHotel",
+components:{looading},
 data(){
   return{
     formdata:{
@@ -163,6 +167,7 @@ data(){
      formdata2:[],
      formdata3:[],
            err:null,
+           load: false,
            user : useUserStore()
 
     
@@ -181,6 +186,8 @@ mounted(){
 methods: {
   
     postinfo(){
+      this.load = true
+
     this.formdata2 = this.formdata2.filter((e) => {
         return e.name === this.temresidential
       })
@@ -197,7 +204,9 @@ methods: {
       body: JSON.stringify(this.formdata)
       })
       .then(res => res.json())
-      .then(data => { if(data.error)
+      .then(data => {
+        this.load = false
+         if(data.error)
       this.err = data.error.details
       else
             this.$router.push({name:'HotelView' })

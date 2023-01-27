@@ -1,7 +1,8 @@
 <template>
  
+ <looading v-if="load"/>
 
-  <div class="container" style="direction:rtl">
+  <div v-else class="container" style="direction:rtl">
 
       <h3 class="heading" style="display:initial;margin-left:2rem">المحافظات</h3>
        <form style="display:initial;">
@@ -15,9 +16,9 @@
   <thead>
     <tr>
       <th scope="col"> الترتيب</th>
-      <th scope="col"> البلد</th>
-      <th scope="col"> رقم المحافظة </th>
       <th scope="col">اسم المحافظة</th>
+      <th scope="col"> رقم المحافظة </th>
+      <th scope="col"> البلد</th>
      
     </tr>
   </thead>
@@ -26,9 +27,9 @@
     <tr v-for="keey in formdata2" :key="keey.id">
       
       <th scope="row" >{{keey.id}}</th>
-      <td>{{keey.country_name}}</td>
-      <td> {{keey.code}}</td>
       <td>       {{keey.name}} </td>
+      <td> {{keey.code}}</td>
+      <td>{{keey.country_name}}</td>
      
     
     </tr>
@@ -51,14 +52,16 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name:"GovView",
+components:{looading},
 data(){
   return{
     formdata:[],
      formdata2:[],
-     work:false,
+     load: true,
      user : useUserStore()
 
     
@@ -75,7 +78,7 @@ mounted() {
 },      })
       .then(res => res.json())
       .then(data => {this.formdata2 = data
-          
+        this.load = false
       })
     }
 }

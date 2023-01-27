@@ -43,7 +43,10 @@
 
 
 <div class="flex last">
-  <button  class="btn btn-primary">اضافة</button>
+  <button  class="btn btn-primary"> 
+    <looading v-if="load"/>
+    <span v-else>اضافة</span>
+  </button>
 </div>
       </form>
 
@@ -56,9 +59,11 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name: 'AddReport',
+components:{looading},
 data(){
   return{
     formdata:{
@@ -69,7 +74,7 @@ data(){
     },
     temguest: '',
      formdata2:[],
-   
+     load: false,
      err:null,
      user : useUserStore()
 
@@ -78,7 +83,8 @@ data(){
 },
 methods: {
     postinfo(){
-          
+      this.load = true
+
  this.formdata2 = this.formdata2.filter((e) => {
         return e.name === this.temguest
       })
@@ -100,6 +106,8 @@ methods: {
       })
       .then(res => res.json())
       .then(data => {
+        this.load = false
+
          if(data.error)
       this.err = data.error.details
       else

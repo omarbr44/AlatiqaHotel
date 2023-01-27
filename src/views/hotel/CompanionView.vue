@@ -15,9 +15,10 @@
   </div>
 </div>
 
- 
+<looading v-if="load"/>
 
-  <div class="container" style="direction:rtl">
+
+  <div v-else class="container" style="direction:rtl">
 
       <h3 class="heading" style="display:initial;margin-left:2rem">المرافقين</h3>
      
@@ -76,15 +77,17 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name: 'CompanionView',
+components:{looading},
 props: ['idd'],
 data(){
   return{
     formdata:[],
      formdata2:[],
-     work:false,
+     load: true,
       id_del: 0,
      delete_act : false,
      delete_go : false,
@@ -100,11 +103,9 @@ mounted() {
       "authorization": "Token "+this.user.token
 },      })
       .then(res => res.json())
-      .then(data => {this.formdata2 = data           
+      .then(data => {this.formdata2 = data     
+        this.load = false
       })
-      
-    
-      
     },
     methods: {
     deelete(id){
@@ -122,7 +123,7 @@ mounted() {
       "authorization": "Token "+this.user.token
 },      }).then(res => {
         if(res.ok){
-         this.$router.go()
+          this.$router.go()
         }
       })      }
       

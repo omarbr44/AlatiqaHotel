@@ -15,8 +15,10 @@
   </div>
 </div>
 
+<looading v-if="load"/>
 
-  <div class="container" style="direction:rtl">
+
+  <div v-else class="container" style="direction:rtl">
 
       <h3 class="heading" style="display:initial;margin-left:2rem">البلاغات</h3>
       <form style="display:initial;" v-if="user.is_woner">
@@ -49,6 +51,11 @@
           <button  class="icon-button red"> <img src="../../assets/x.png" alt="" class="icon-small">
 </button>
         </form>
+        
+<router-link :to="{ name: 'ReportPrint', params: { id: keey.id}}"> <button   class="icon-button orange" >
+  <img src="../../assets/printer.png" alt="" class="icon-small">
+</button> </router-link> 
+
          <router-link :to="{ name: 'updatereport', params: { idd: keey.id}}"> <button   class="icon-button orange" > 
               <img src="../../assets/edit.png" alt="" class="icon-small">
 </button> </router-link>
@@ -77,14 +84,16 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name: 'ReportView',
+components:{looading},
 data(){
   return{
     formdata:[],
      formdata2:[],
-     work:false,
+     load: true,
       id_del: 0,
      delete_act : false,
      delete_go : false,
@@ -103,7 +112,7 @@ mounted() {
 },      })
       .then(res => res.json())
       .then(data => {this.formdata2 = data
-           
+        this.load = false
       })
       
     

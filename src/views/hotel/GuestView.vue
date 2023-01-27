@@ -15,13 +15,17 @@
   </div>
 </div>
 
-  <div class="container" style="direction:rtl">
+<looading v-if="load"/>
 
 
-<div class="mb-3 input-in-con ">
+  <div v-else class="container" style="direction:rtl">
+
+
+<div v-if="user.is_woner" class="mb-3 input-in-con ">
   <input type="date" class="form-control half ltr auto " id="exampleFormControlInput1" v-model="DateFilter">
 <button type="button" class="btn btn-primary green_but" @click="filter()"> تاريخ الدخول</button>
 </div>
+
 <div class="mb-3 input-in-con " v-if="user.is_staff">
   <select class="form-control half ltr auto " id="exampleFormControlInput1" v-model="HotelFilter" >
     <option disabled >اختر الفندق</option> 
@@ -32,7 +36,12 @@
       <h3 class="heading" style="display:initial;margin-left:2rem">النزلاء</h3>
       <form style="display:initial;">
  <router-link class="mx-2" to="/AddGuest" v-if="user.is_woner"> <button  class="btn btn-primary">اضافة</button> </router-link>
- <router-link :to="{ name: 'GuestPrint', params: { id: hotel_id} ,query:{createAt:DateFilter}}"> 
+ 
+ <router-link v-if="user.is_staff" :to="{ name: 'GuestPrint', params: { id: hotel_id} ,query:{createAt:DateFilter}}"> 
+  <button  class="btn btn-primary">طباعة</button>
+</router-link>
+
+ <router-link v-if="user.is_woner" :to="{ name: 'GuestPrintForOwn', params: { id: user.hotel} ,query:{createAt:DateFilter}}"> 
   <button  class="btn btn-primary">طباعة</button>
 </router-link>
       </form>
@@ -45,6 +54,7 @@
       <th scope="col"> الترتيب</th>
       <th scope="col"> الاسم</th>
       <th scope="col" class="hidee">  الرقم</th>
+      <th scope="col" class="hidee">  البطاقة</th>
       <th scope="col">الفندق </th>
       <th scope="col" class="hidee">المديرية </th>
       <th scope="col"> </th>
@@ -60,6 +70,7 @@
       <th scope="row" >{{keey.id}}</th>
       <td>       {{keey.name}} </td>
       <td class="hidee">{{keey.phone}}</td>
+      <td class="hidee"><a :href="keey.pic_document" target="_blank">انقر هنا</a></td>
       <td>{{keey.hotel_name}} </td>
       <td class="hidee">{{keey.directorates_name}} </td>
  
@@ -76,6 +87,7 @@
 </button> </router-link> -->
 
 </div> 
+
 
     </tr>
     
@@ -105,9 +117,12 @@
 
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
+import moment from 'moment'
 
 export default {
 name: 'GuestView',
+components:{looading},
 data(){
   return{
     formdata:[],
@@ -119,14 +134,17 @@ data(){
      delete_go : false,
      DateFilter: '',
      HotelFilter: '',
-     hotel_id: 0,
-     user : useUserStore()
+     hotel_id: ' ',
+      dat : new Date(),
+     user : useUserStore(),
+     load: true
 
     
   }
 },
 mounted() {
     if(this.user.is_staff){
+      this.DateFilter = moment(  this.dat.toISOString(this.dat.toLocaleString()) ).format("YYYY-MM-DD")
 
   fetch(geturl()+"hotels/hotel/", {
       
@@ -138,10 +156,10 @@ mounted() {
       .then(res => res.json())
       .then(data => {
            this.formdata3 = data
-           console.log(data)
       })
     
     }
+     
   fetch(geturl()+"guest/guest/?create_at="+this.DateFilter+"&hotel="+this.user.hotel, {
       
         headers: {"Content-Type": "application/json",
@@ -149,7 +167,8 @@ mounted() {
 },      })
       .then(res => res.json())
       .then(data => {this.formdata2 = data
-           this.hotel_id = this.formdata2[0].hotel
+        this.load = false
+          // this.hotel_id = this.formdata2[0].hotel
       })
       
      
@@ -158,6 +177,11 @@ mounted() {
     methods: {
 
         filter(){
+          console.log(this.DateFilter)
+          if(this.user.is_woner){
+            this.HotelFilter = this.user.hotel
+          }
+          
           fetch(geturl()+"guest/guest/?create_at="+this.DateFilter+"&hotel="+this.HotelFilter, {
       
             headers: {"Content-Type": "application/json",
@@ -166,6 +190,8 @@ mounted() {
       .then(res => res.json())
       .then(data => {
         this.formdata2 = data
+        if(this.formdata2[0])
+        this.hotel_id = this.formdata2[0].hotel
       })
         },
 

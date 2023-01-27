@@ -2,8 +2,10 @@
   
   <div class="side-con">
 <div class="flex-shrink-0 p-3 bg-white nav-right p-0" style="width: 280px;">
-    <div class="d-flex align-items-center pb-3 mb-3 logo">
+    <div class="img_con pb-3 mb-3 logo">
      <img src="../assets/logoo.png" alt="" style="width:5rem">
+     <p >العتيقه تيكنولوجي</p>
+
     </div>
        
     <ul class="list-unstyled ps-0 text-right bac">
@@ -31,7 +33,7 @@
           </ul>
         </div>
       </li>
-      <li class="mb-1">
+      <li class="mb-1" v-if="user.is_staff">
          <div class="fleex  btn-toggle  rounded collapsed " data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
         <h5 class="arrow">&lt;</h5>
         <button class="btn btn-toggle align-items-center rounded collapsed white font-s" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
@@ -114,5 +116,11 @@ const router = useRouter()
 }
 .bac{
     background: #3d3a7d;
+}
+.img_con{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 </style>

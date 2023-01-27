@@ -14,8 +14,9 @@
     </div>
   </div>
 </div>
+  <looading v-if="load"/>
 
-  <div class="container" style="direction:rtl">
+  <div v-else class="container" style="direction:rtl">
 
       <h3 class="heading" style="display:initial;margin-left:2rem">فندق</h3>
       <form style="display:initial;" v-if="user.is_staff">
@@ -84,14 +85,16 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name:'HotelView',
+components:{looading},
 data(){
   return{
      formdata1:[],
      formdata2:[],
-     work:false,
+     load: true,
      id_del: 0,
      delete_act : false,
      delete_go : false,
@@ -113,7 +116,9 @@ mounted() {
         this.formdata2.push(this.formdata1)}
         else
         this.formdata2 = data
-           
+        
+        this.load = false
+
       })
     },
     methods: {

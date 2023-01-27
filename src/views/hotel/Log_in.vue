@@ -2,8 +2,9 @@
     <div class="containerr ">
         <div class="card my-2" >
   <div class="card-body">
-    <div class="img_con mb-2">
+    <div class="img_con mb-2 ">
     <img src="../../assets/logoo2.png" alt="" style="width:5rem">
+    <p style="color: #383838;">العتيقه تيكنولوجي</p>
     </div>
     <form @submit.prevent="postinfo">
     <div class="mb-3 input-in-con ">
@@ -24,7 +25,10 @@
 
                     
     <div class="d-grid gap-2">
-  <button  style="background: #3d3a7d;" class="btn btn-primary" >دخول</button>
+  <button  style="background: #3d3a7d;" class="btn btn-primary" >
+    <looading v-if="load"/>
+    <span v-else>دخول</span>
+</button>
 </div>
 </form>
   </div>
@@ -44,6 +48,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
  import geturl from '../../composables/geturl'
+ import looading from '@/components/looading.vue'
+
     const formdata = ref({
         username:'',
         password:''
@@ -51,22 +57,27 @@ import { useUserStore } from '@/stores/user'
     const err = ref(null)
     const router = useRouter()
     const user = useUserStore()
+    const load = ref(false)
                 
     const postinfo = ()=>{
+        load.value= true
         fetch(geturl()+"account/woner/login/", {
            method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(formdata.value)
         })
         .then(res => res.json())
-        .then(data => { if(data.error){
+        .then(data => { 
+            load.value= true
+
+            if(data.error){
         err.value = data.error.details
        }
         else{
             user.addToken(data.token,data.user,data.hotel)
             user.addRole(data.is_staff,data.is_woner)
              router.push({
-               name:'HotelView', 
+               name:'GuestView', 
              })
         }
         }) 
@@ -89,12 +100,13 @@ import { useUserStore } from '@/stores/user'
 .img_con{
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 img{
     
     width: 6rem;
     padding: 0.5rem;
     box-sizing: content-box;
-    border-radius: 7px;
 }
 </style>

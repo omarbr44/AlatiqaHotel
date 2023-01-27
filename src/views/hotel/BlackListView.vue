@@ -1,11 +1,9 @@
 <template>
   
- 
+  <looading v-if="load"/>
 
 
-
-
-  <div class="container" style="direction:rtl">
+  <div v-else class="container" style="direction:rtl">
 
       <h3 class="heading" style="display:initial;margin-left:2rem">القائمة السوداء</h3>
       <form style="display:initial;">
@@ -62,13 +60,16 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name:'BlackListView',
+components:{looading},
 data(){
     return{
         formdata2 : [],
-        user : useUserStore()
+        user : useUserStore(),
+        load: true,
 
     }
 },
@@ -85,7 +86,7 @@ mounted(){
       })
       .then(res => res.json())
       .then(data => {this.formdata2 = data
-           
+        this.load = false
       })
 },
 }

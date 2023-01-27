@@ -47,7 +47,10 @@
 </div>
 </div>
 <div class="flex last">
-  <button  class="btn btn-primary">اضافة</button>
+  <button  class="btn btn-primary">
+    <looading v-if="load"/>
+    <span v-else>اضافة</span>
+  </button>
 </div>
       </form>
 
@@ -60,10 +63,11 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name: "AddGov",
-
+components:{looading},
  data(){
   return{
     formdata:{
@@ -75,6 +79,7 @@ name: "AddGov",
       temcountry: '',
      formdata2:[],
           err:null,
+          load: false,
           user : useUserStore()
 
 
@@ -83,6 +88,8 @@ name: "AddGov",
 },
 methods: {
     postinfo(){
+      this.load = true
+
     this.formdata2 = this.formdata2.filter((e) => {
         return e.name === this.temcountry
       })
@@ -100,6 +107,8 @@ methods: {
       })
       .then(res => res.json())
       .then(data =>{ 
+        this.load = false
+
               if(data.error)
       this.err = data.error.details
       else

@@ -68,7 +68,10 @@
 
 
 <div class="flex last">
-  <button  class="btn btn-primary">اضافة</button>
+  <button  class="btn btn-primary">
+    <looading v-if="load"/>
+    <span v-else>اضافة</span>
+  </button>
 </div>
       </form>
 
@@ -80,9 +83,11 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name: 'AddBlackList',
+components:{looading},
 data(){
     return{
         
@@ -95,6 +100,7 @@ pic_document: '',
    
     },
     err:null,
+    load: false,
     user : useUserStore()
 
     }
@@ -110,7 +116,8 @@ methods: {
   }
 },
     postinfo(){
-          
+      this.load = true
+
 
     fetch(geturl()+"guest/blacklist/", {
          method: "POST",
@@ -121,7 +128,8 @@ methods: {
       })
       .then(res => res.json())
       .then(data => {
-         
+        this.load = false
+
          if(data.error){
            this.err = data.error.details
          }

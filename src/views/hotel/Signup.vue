@@ -4,6 +4,7 @@
   <div class="card-body">
     <div class="img_con mb-2">
     <img src="../../assets/logoo2.png" alt="" style="width:5rem">
+    <p style="color: #383838;">العتيقه تيكنولوجي</p>
     </div>
     <form @submit.prevent="postinfo">
     <div class="mb-3 input-in-con ">
@@ -108,6 +109,8 @@ import { useRouter } from 'vue-router'
 .img_con{
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 img{
     width: 6rem;

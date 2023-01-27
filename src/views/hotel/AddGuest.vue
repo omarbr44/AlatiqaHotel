@@ -93,13 +93,6 @@
 </div>
 
   <div class="mb-3 input-in-con ">
-      <div v-if="this.err">
-  <div v-if="this.err.start"  class="alert alert-danger" role="alert"> {{ this.err.start[0]}}</div>
-</div>
-  <label for="exampleFormControlInput1" class="form-label">تاريخ الدخول</label>
-  <input type="datetime-local" class="form-control  ltr" id="exampleFormControlInput1" placeholder=" ادخل رقم الجوال " v-model="formdata.start">
-</div>
-  <div class="mb-3 input-in-con ">
        <div v-if="this.err">
   <div v-if="this.err.end"  class="alert alert-danger" role="alert"> {{ this.err.end[0]}}</div>
 </div>
@@ -207,7 +200,10 @@
 
 
 <div class="flex last">
-  <button ref="AddButton" class="btn btn-primary">اضافة</button>
+  <button ref="AddButton" class="btn btn-primary">
+    <looading v-if="load"/>
+    <span v-else>اضافة</span>
+  </button>
 </div>
       </form>
 
@@ -220,10 +216,12 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
-
+import moment from 'moment'
+import looading from '@/components/looading.vue'
 
 export default {
 name: 'AddGuest', 
+components:{looading},
 data(){
   return{
     formdata:{
@@ -250,6 +248,15 @@ data(){
     pic_document: '',
     guest: ''
     },
+    errcompanionss: {
+      name: "",
+      document: "",
+    gender: "",
+    nationality: "",
+    number: '',
+    pic_document: '',
+    guest: ''
+    },
     
     temdirectorates: '',
      formdata2:[],
@@ -259,6 +266,7 @@ data(){
       listt:[],
       inc : 0,
       ShowButton : false,
+      load: false,
       user : useUserStore()
 
         
@@ -266,7 +274,9 @@ data(){
 
 },
 methods: {
+  
    immg(){
+    
   var reader = new window.FileReader();
   reader.readAsDataURL(this.$refs.file.files[0]);
   reader.onload = ()=>{
@@ -323,14 +333,16 @@ methods: {
       })
         }else{
     this.listt.push(this.companionss)
-    this.errList.push(this.companionss)
+    this.errList.push(this.errcompanionss)
     this.inc = ++this.inc
   }
 
   },
     postinfo(){
+      this.load = true
 
-
+      let dat = new Date()
+     this.formdata.start = moment(  dat.toISOString(dat.toLocaleString()) ).format("YYYY-MM-DDTHH:mm")
 
       this.formdata3 = this.formdata3.filter((e) => {
         return e.name === this.temdirectorates
@@ -352,7 +364,7 @@ methods: {
       })
       .then(res => res.json())
       .then(data => {
-
+        this.load = false
          if(data.error){
            this.err = data.error.details
          }

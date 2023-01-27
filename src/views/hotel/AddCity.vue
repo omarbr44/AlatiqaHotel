@@ -38,7 +38,10 @@
 </div>
 </div>
 <div class="flex last">
-  <button  class="btn btn-primary">اضافة</button>
+  <button  class="btn btn-primary">
+    <looading v-if="load"/>
+    <span v-else>اضافة</span>
+  </button>
 </div>
       </form>
 
@@ -52,9 +55,11 @@
 <script>
 import geturl from '../../composables/geturl'
 import { useUserStore } from '@/stores/user'
+import looading from '@/components/looading.vue'
 
 export default {
 name: "AddCity",
+components:{looading},
 data(){
   return{
     formdata:{
@@ -64,7 +69,7 @@ data(){
     },
      formdata2:[],
      temdirectorates :'',
-     work:false,
+     load: false,
      err:null,
      user : useUserStore()
      
@@ -73,6 +78,7 @@ data(){
 },
 methods: {
     postinfo(){
+      this.load = true
 
 this.formdata2 = this.formdata2.filter((e) => {
       if(e.name === this.temdirectorates)
@@ -99,6 +105,8 @@ this.formdata2 = this.formdata2.filter((e) => {
       .then(res => res.json())
       .then(data => { 
         if(data.error){
+          this.load = false
+
           this.err = data.error.details
                   }
       else

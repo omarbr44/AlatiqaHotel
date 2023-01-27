@@ -22,7 +22,7 @@
             </ul>
           </li>
         
-           <li class="nav-item dropdown">
+           <li class="nav-item dropdown" v-if="user.is_staff">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               الفنادق
             </a>
@@ -87,6 +87,10 @@ const user = useUserStore()
     router.currentRoute.value.name == undefined
     || 
     router.currentRoute.value.name == 'GuestPrint'
+    || 
+    router.currentRoute.value.name == 'GuestPrintForOwn'
+    || 
+    router.currentRoute.value.name == 'ReportPrint'
      )
        route_name.value = false
     else
