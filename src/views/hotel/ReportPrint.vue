@@ -19,11 +19,11 @@
       display: flex;
       justify-content: end;"><p style="font-size: 0.9rem;">الجمهورية اليمنية
              <br/>
-وزارة الداخلية
+      وزارة الداخلية
              <br/>
               ادارة امن وشرطة م/ حضرموت للوادي والصحراء
              <br/>
-الشرطة السياحية
+      الشرطة السياحية
          </p>
         </div>
      
@@ -96,7 +96,7 @@
                </div>
          <div style="text-align: right; padding-right: 1rem;">
            
-     <span> 733888135 : واتساب -</span>
+     <span> 777777777 : واتساب -</span>
             <br/>
      <span> info@alatiqa.com : ايميل -</span>
              <br/>
