@@ -96,7 +96,7 @@ data(){
   }
 },
 mounted() {
-      
+  console.log('jjj')
      fetch(geturl()+"guest/companion/?guest="+this.idd, {
       
       headers: {"Content-Type": "application/json",
@@ -109,6 +109,7 @@ mounted() {
     },
     methods: {
     deelete(id){
+      
         this.id_del = id
         this.delete_act = true
       },
@@ -117,13 +118,15 @@ mounted() {
       },
 
       Mdelete(){
+        
     fetch(geturl()+"guest/companion/"+this.id_del+'/', {
          method: "DELETE",
          headers: {"Content-Type": "application/json",
       "authorization": "Token "+this.user.token
 },      }).then(res => {
         if(res.ok){
-          this.$router.go()
+          this.$router.push({name:'CompanionView', params: { idd: this.idd} })
+        //  this.$router.go(-1)
         }
       })      }
       
