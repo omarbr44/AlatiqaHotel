@@ -68,10 +68,10 @@ import { useUserStore } from '@/stores/user'
         })
         .then(res => res.json())
         .then(data => { 
-            load.value= true
-
+            
             if(data.error){
-        err.value = data.error.details
+                err.value = data.error.details
+                load.value= false
        }
         else{
             user.addToken(data.token,data.user,data.hotel)

@@ -75,6 +75,10 @@
       <td class="hidee">{{keey.directorates_name}} </td>
  
       <div class="right">
+      <!--  <form @submit.prevent="checkout(keey.id)">
+          <button  class="icon-button red"> <img src="../../assets/x.png" alt="" class="icon-small">
+</button>
+        </form> -->
         <form @submit.prevent="deelete(keey.id)">
           <button  class="icon-button red"> <img src="../../assets/x.png" alt="" class="icon-small">
 </button>
@@ -128,6 +132,21 @@ data(){
     formdata:[],
      formdata2:[],
      formdata3:[],
+     formdata4:{},
+   /*  guestCheckout:{
+      name: "",
+    phone: "",
+    family: "",
+    document: "",
+    gender: "",
+    nationality: "",
+    reservation: '',
+    number: '',
+    start: '',
+    end: '',
+    hotel: '',
+    directorates: '',
+     },*/
      work:false,
       id_del: 0,
      delete_act : false,
@@ -177,7 +196,6 @@ mounted() {
     methods: {
 
         filter(){
-          console.log(this.DateFilter)
           if(this.user.is_woner){
             this.HotelFilter = this.user.hotel
           }
@@ -205,6 +223,62 @@ mounted() {
          this.delete_act = false
       },
 
+     /* checkout(id){
+        let dat = new Date()
+        
+        this.formdata4 = this.formdata2.filter((e)=>{
+          return e.id == id
+        })
+       
+        
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        var reader = new FileReader();
+        reader.onloadend = function() {
+          var dataUrl = reader.result;
+          console.log(dataUrl)
+        }
+        reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', this.formdata4[0].pic_document);
+    xhr.setRequestHeader("authorization", "Token "+this.user.token)
+    xhr.responseType = 'blob';
+    xhr.send();
+
+    
+
+        this.guestCheckout.end = moment(  dat.toISOString(dat.toLocaleString()) ).format("YYYY-MM-DDTHH:mm")
+        this.guestCheckout.hotel = this.formdata4[0].hotel
+            this.guestCheckout.name = this.formdata4[0].name
+            this.guestCheckout.phone = this.formdata4[0].phone
+            this.guestCheckout.family = this.formdata4[0].family
+            this.guestCheckout.document = this.formdata4[0].document
+            this.guestCheckout.pic_document = this.formdata4[0].pic_document
+            this.guestCheckout.gender = this.formdata4[0].gender
+            this.guestCheckout.nationality = this.formdata4[0].nationality
+            this.guestCheckout.reservation = this.formdata4[0].reservation
+            this.guestCheckout.number = this.formdata4[0].number
+            this.guestCheckout.start = this.formdata4[0].start
+          this.guestCheckout.start=  moment( this.formdata4[0].start ).format("YYYY-MM-DDTHH:mm")
+            this.guestCheckout.directorates = this.formdata4[0].directorates
+ 
+          console.log(this.guestCheckout);
+        fetch(geturl()+"guest/guest/"+id+'/', {
+         method: "PUT",
+         headers: {"Content-Type": "application/json",
+      "authorization": "Token "+this.user.token
+},       body: JSON.stringify(this.guestCheckout)
+      })
+      .then(res => res.json())
+      .then(data => { if(data.error){
+                      console.log(data)
+      }
+      else
+      console.log(data)
+           // this.$router.push({name:'GuestView' })
+      }) 
+      }*/
+        
        Mdelete(){
     fetch(geturl()+"guest/guest/"+this.id_del+'/', {
          method: "DELETE",
