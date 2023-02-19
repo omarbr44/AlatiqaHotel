@@ -61,6 +61,19 @@
 </div>
   <div class="mb-3 input-in-con">
     <div v-if="this.err">
+  <div v-if="this.err.purpose"  class="alert alert-danger" role="alert"> {{ this.err.purpose[0]}}</div>
+</div>
+ <label for="exampleFormControlInput1" class="form-label">الغرض من الحجز</label>
+ <select class="form-select half" aria-label="Default select example" v-model="formdata.purpose">
+  <option disabled  selected>اختر الغرض من الحجز</option>
+  <option value="1">نشاط اجتماعي</option>
+  <option value="2">الراحة</option>
+  <option value="3">فعاليات</option>
+  <option value="4">مؤتمر</option>
+</select>
+</div>
+  <div class="mb-3 input-in-con">
+    <div v-if="this.err">
   <div v-if="this.err.reservation"  class="alert alert-danger" role="alert"> {{ this.err.reservation[0]}}</div>
 </div>
  <label for="exampleFormControlInput1" class="form-label">الحجز</label>
@@ -237,7 +250,10 @@ data(){
     end: '',
     hotel: '',
     directorates: '',
-    pic_document: ''
+    pic_document: '',
+    purpose: '',
+    number_pool: '',
+    number_hall: '',
     },
     companionss: {
       name: "",

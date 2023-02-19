@@ -24,13 +24,13 @@
       <option  v-for="keyy in formdata2" >{{keyy.name}}</option>
   </datalist>
 </div>
-  <div class="mb-3 input-in-con">
+  <!-- <div class="mb-3 input-in-con">
     <div v-if="this.err">
   <div v-if="this.err.owner"  class="alert alert-danger" role="alert"> {{ this.err.owner[0]}}</div>
 </div>
   <label for="exampleFormControlInput1" class="form-label">اسم مالك الفندق</label>
   <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="ادخل اسم مالك الفندق " v-model="formdata.owner">
-</div>
+</div> -->
 <div class="flex">
   <div class="mb-3 input-in-con half">
       <div v-if="this.err">
@@ -105,6 +105,16 @@
   <option  v-for="keey in formdata3" :value="keey.id" :key="keey.id">{{keey.username}}</option>
 </select>
 </div>
+<div class="mb-3 input-in-con  ">
+           <div v-if="this.err">
+  <div v-if="this.err.installation"  class="alert alert-danger" role="alert"> {{ this.err.installation[0]}}</div>
+</div>
+  <label for="exampleFormControlInput1" class="form-label">المنشأة</label>
+ <select class="form-select " aria-label="Default select example" v-model="formdata.installation" >
+  <option disabled selected>اختر المنشاة</option>
+  <option  v-for="keey in formdata4" :value="keey.id" :key="keey.id">{{keey.name}}</option>
+</select>
+</div>
 <div class="flex last">
   <div class="mb-3 input-in-con half last-50">
         <div v-if="this.err">
@@ -150,7 +160,8 @@ data(){
   return{
     formdata:{
       name: "",
-    owner: "",
+    //owner: "",
+    installation: "",
     number_hotel: "+967",
     number_hotel2: "+967",
     number_phone: "+967",
@@ -166,6 +177,7 @@ data(){
     temresidential: '',
      formdata2:[],
      formdata3:[],
+     formdata4:[],
            err:null,
            load: false,
            user : useUserStore()
@@ -177,10 +189,19 @@ mounted(){
   fetch(geturl()+"account/accounts/", {
       
       headers: {"Content-Type": "application/json",
-    "authorization": "Token "+this.user.token
+    //"authorization": "Token "+this.user.token
 },      })
     .then(res => res.json())
     .then(data => {this.formdata3 = data
+    })
+
+  fetch(geturl()+"hotels/installation/", {
+      
+      headers: {"Content-Type": "application/json",
+    //"authorization": "Token "+this.user.token
+},      })
+    .then(res => res.json())
+    .then(data => {this.formdata4 = data
     })
 },
 methods: {
@@ -199,7 +220,7 @@ methods: {
     fetch(geturl()+"hotels/hotel/", {
          method: "POST",
          headers: {"Content-Type": "application/json",
-      "authorization": "Token "+this.user.token
+      //"authorization": "Token "+this.user.token
 },
       body: JSON.stringify(this.formdata)
       })
@@ -217,7 +238,7 @@ methods: {
        fetch(geturl()+"places/residential/", {
       
         headers: {"Content-Type": "application/json",
-      "authorization": "Token "+this.user.token
+     // "authorization": "Token "+this.user.token
 },      })
       .then(res => res.json())
       .then(data => {this.formdata2 = data

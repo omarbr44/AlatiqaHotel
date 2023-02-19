@@ -2,6 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 
 import AddHotel from '../views/hotel/AddHotel.vue'
+import AddNumber_pool from '../views/hotel/AddNumber_pool.vue'
+import AddNumber_hall from '../views/hotel/AddNumber_hall.vue'
+import AddPool from '../views/hotel/AddPool.vue'
+import AddHall from '../views/hotel/AddHall.vue'
+import AddOwner from '../views/hotel/AddOwner.vue'
+import Addinstallation from '../views/hotel/Addinstallation.vue'
 import AddGov from '../views/hotel/AddGov.vue'
 import AddCity from '../views/hotel/AddCity.vue'
 import AddSquare from '../views/hotel/AddSquare.vue'
@@ -13,6 +19,12 @@ import SquareView from '../views/hotel/SquareView.vue'
 import CountryView from '../views/hotel/CountryView.vue'
 import MidView from '../views/hotel/MidView.vue'
 import GovView from '../views/hotel/GovView.vue'
+import HallView from '../views/hotel/HallView.vue'
+import Number_hallView from '../views/hotel/Number_hallView.vue'
+import PoolView from '../views/hotel/PoolView.vue'
+import Number_poolView from '../views/hotel/Number_poolView.vue'
+import OwnerView from '../views/hotel/OwnerView.vue'
+import InstallationView from '../views/hotel/InstallationView.vue' 
 import updateehot from '../views/hotel/updateehot.vue'
 import AddGuest from '../views/hotel/AddGuest.vue'
 import GuestView from '../views/hotel/GuestView.vue'
@@ -54,154 +66,226 @@ const router = createRouter({
       component: Signup
     },
     {
+      path: '/OwnerView',
+      name: 'OwnerView',
+      component: OwnerView,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/InstallationView',
+      name: 'InstallationView',
+      component: InstallationView,
+      //meta: {requiresAuth: true}
+    },
+    {
       path: '/AddHotel',
       name: 'AddHotel',
       component: AddHotel,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/AddNumber_hall',
+      name: 'AddNumber_hall',
+      component: AddNumber_hall,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/AddNumber_pool',
+      name: 'AddNumber_pool',
+      component: AddNumber_pool,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/AddOwner',
+      name: 'AddOwner',
+      component: AddOwner,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/AddHall',
+      name: 'AddHall',
+      component: AddHall,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/HallView',
+      name: 'HallView',
+      component: HallView,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/Number_hallView',
+      name: 'Number_hallView',
+      component: Number_hallView,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/PoolView',
+      name: 'PoolView',
+      component: PoolView,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/Number_poolView',
+      name: 'Number_poolView',
+      component: Number_poolView,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/AddPool',
+      name: 'AddPool',
+      component: AddPool,
+      //meta: {requiresAuth: true}
+    },
+    {
+      path: '/Addinstallation',
+      name: 'Addinstallation',
+      component: Addinstallation,
+      //meta: {requiresAuth: true}
     },
     {
       path: '/GuestPrint/:id', 
       name: 'GuestPrint',
       component: GuestPrint,
       props:true,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
   },
     {
       path: '/ReportPrint/:id', 
       name: 'ReportPrint',
       component: ReportPrint,
       props:true,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
   },
     {
       path: '/GuestPrintForOwn/:id', 
       name: 'GuestPrintForOwn',
       component: GuestPrintForOwn,
       props:true,
-      meta: {owner: true}
+      //meta: {owner: true}
   },
     {
       path: '/AddGov',
       name: 'AddGov',
       component: AddGov,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/AddCity',
       name: 'AddCity',
       component: AddCity,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/AddSquare',
       name: 'AddSquare',
       component: AddSquare,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/AddMid',
       name: 'AddMid',
       component: AddMid,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/AddCountry',
       name: 'AddCountry',
       component: AddCountry,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/HotelView',
       name: 'HotelView',
       component: HotelView,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/CityView',
       name: 'CityView',
       component: CityView,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/SquareView',
       name: 'SquareView',
       component: SquareView,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/CountryView', 
       name: 'CountryView',
       component: CountryView,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/MidView', 
       name: 'MidView',
       component: MidView,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/GovView', 
       name: 'GovView',
       component: GovView,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/AddGuest', 
       name: 'AddGuest',
       component: AddGuest,
-      meta: {owner: true}
+      //meta: {owner: true}
     },
     {
       path: '/GuestView', 
       name: 'GuestView',
       component: GuestView,
-      meta: {owner: true}
+      //meta: {owner: true}
     },
     {
       path: '/AddCompanion', 
       name: 'AddCompanion',
       component: AddCompanion,
-      meta: {owner: true}
+      //meta: {owner: true}
     },
     {
       path: '/CompanionView/:idd', 
       name: 'CompanionView',
       component: CompanionView,
       props: true,
-      meta: {owner: true}
+      //meta: {owner: true}
     },
     {
       path: '/AddReport', 
       name: 'AddReport',
       component: AddReport,
-      meta: {owner: true}
+      //meta: {owner: true}
     },
     {
       path: '/AddBlackList', 
       name: 'AddBlackList',
       component: AddBlackList,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/ReportView', 
       name: 'ReportView',
       component: ReportView,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/updateehot/:idd', 
       name: 'updateehot',
       component: updateehot,
       props: true,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/updateBlackList/:idd', 
       name: 'updateBlackList',
       component: updateBlackList,
       props: true,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     
     {
@@ -213,21 +297,21 @@ const router = createRouter({
       path: '/BlackListView',
       name: 'BlackListView',
       component: BlackListView,
-      meta:{requiresAuth: true}
+      //meta:{requiresAuth: true}
     },
     {
       path: '/updategue/:idd', 
       name: 'updategue',
       component: updategue,
       props: true,
-      meta: {owner: true}
+      //meta: {owner: true}
     },
     {
       path: '/updatecomp/:idd', 
       name: 'updatecomp',
       component: updatecomp,
       props: true,
-      meta: {owner: true}
+      //meta: {owner: true}
     },
   
     {
@@ -235,7 +319,7 @@ const router = createRouter({
       name: 'updatereport',
       component: updatereport,
       props: true,
-      meta: {requiresAuth: true}
+      //meta: {requiresAuth: true}
     },
     {
       path: '/:catchAll(.*)', 
