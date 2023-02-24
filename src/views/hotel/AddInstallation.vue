@@ -122,6 +122,7 @@
   },
   
       postinfo(){
+
         this.load = true
   
         this.formdata3 = this.formdata3.filter((e) => {
@@ -139,11 +140,12 @@
          this.formdata.owner =  this.formdata3[0].id 
           else
           this.formdata.owner = this.temowner == '' ? '' :'lorem ipsum'
-       
+
       fetch(geturl()+"hotels/installation/", {
+        
            method: "POST",
            headers: {"Content-Type": "application/json",
-       // "authorization": "Token "+this.user.token
+       "authorization": "Token "+this.user.token
   },
         body: JSON.stringify(this.formdata)
         })
@@ -154,7 +156,7 @@
              this.err = data.error.details
            }
         else {        
-             // this.$router.push({name:'GuestView' })
+             this.$router.push({name:'InstallationView' })
             }
         }) 
       },
@@ -164,7 +166,7 @@
          fetch(geturl()+"places/residential/", {
         
           headers: {"Content-Type": "application/json",
-        //"authorization": "Token "+this.user.token
+        "authorization": "Token "+this.user.token
   },
         })
         .then(res => res.json())
@@ -175,11 +177,12 @@
          fetch(geturl()+"hotels/owner/", {
         
           headers: {"Content-Type": "application/json",
-        //"authorization": "Token "+this.user.token
+        "authorization": "Token "+this.user.token
   },
         })
         .then(res => res.json())
         .then(data => {this.formdata2 = data
+
         })
       }
       

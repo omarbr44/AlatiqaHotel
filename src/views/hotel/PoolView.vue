@@ -15,7 +15,7 @@
    <table class="table">
      <thead>
        <tr>
-         <th scope="col"> الترتيب</th>
+         <th scope="col"> </th>
          <th scope="col">اسم المسبح</th>
          <th scope="col"> المنشأة </th>
         
@@ -24,10 +24,12 @@
      <tbody>
        
        <tr v-for="keey in formdata2" :key="keey.id">
-         
-         <th scope="row" >{{keey.id}}</th>
+        <router-link class="star_fa" :to="{ name: 'Number_poolView',  params: { id: keey.id}}"> 
+          <button   class="icon-button orange text-white" > 
+              المسابح 
+</button> </router-link>
          <td>       {{keey.name}} </td>
-         <td> {{keey.installation}}</td>
+         <td> {{keey.Installation_name}}</td>
         
        
        </tr>
@@ -61,7 +63,7 @@
           fetch(geturl()+"hotels/pool/", {
          
            headers: {"Content-Type": "application/json",
-        // "authorization": "Token "+this.user.token
+        "authorization": "Token "+this.user.token
    },      })
          .then(res => res.json())
          .then(data => {this.formdata2 = data

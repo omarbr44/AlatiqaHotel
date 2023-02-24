@@ -7,6 +7,31 @@
     <p style="color: #383838;">العتيقه تيكنولوجي</p>
     </div>
     <form @submit.prevent="postinfo">
+        <label style="text-align: center;
+    width: 100%;">
+    لمن هذا الحساب
+  </label>
+        <div class="flex my-4" style="justify-content: space-evenly;"> 
+        <div class="form-check">
+  <input class="form-check-input" value="1" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked v-model="usertype">
+  <label class="form-check-label" for="flexRadioDefault1">
+    فندق
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" value="2"  type="radio" name="flexRadioDefault" id="flexRadioDefault2" v-model="usertype">
+  <label class="form-check-label" for="flexRadioDefault2">
+    مسبح
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" value="3" type="radio" name="flexRadioDefault" id="flexRadioDefault3" v-model="usertype">
+  <label class="form-check-label" for="flexRadioDefault3">
+    صالة
+  </label>
+</div>
+</div>
+
     <div class="mb-3 input-in-con ">
                         <div v-if="err">
     <div v-if="err.username"  class="alert alert-danger" role="alert"> {{ err.username[0]}}</div>
@@ -67,11 +92,20 @@ import { useRouter } from 'vue-router'
         password2:''
     })
     const err = ref(null)
+    const usertype = ref(1)
+    const url = ref('')
     const router = useRouter()
     const user = useUserStore()
 
     const postinfo = ()=>{
-        fetch(geturl()+"account/woner/signup/", {
+        if(usertype.value==1)
+        url.value = "account/woner/signup/" 
+       else if(usertype.value==2)
+        url.value = "account/pool/signup/" 
+       else if(usertype.value==3)
+        url.value = "account/hall/signup/" 
+        console.log(url.value)
+        fetch(geturl()+url.value, {
            method: "POST",
         headers: {
             "Content-Type": "application/json",

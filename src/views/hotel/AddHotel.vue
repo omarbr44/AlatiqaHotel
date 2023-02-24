@@ -107,10 +107,10 @@
 </div>
 <div class="mb-3 input-in-con  ">
            <div v-if="this.err">
-  <div v-if="this.err.installation"  class="alert alert-danger" role="alert"> {{ this.err.installation[0]}}</div>
+  <div v-if="this.err.Installation"  class="alert alert-danger" role="alert"> {{ this.err.Installation[0]}}</div>
 </div>
   <label for="exampleFormControlInput1" class="form-label">المنشأة</label>
- <select class="form-select " aria-label="Default select example" v-model="formdata.installation" >
+ <select class="form-select " aria-label="Default select example" v-model="formdata.Installation" >
   <option disabled selected>اختر المنشاة</option>
   <option  v-for="keey in formdata4" :value="keey.id" :key="keey.id">{{keey.name}}</option>
 </select>
@@ -161,7 +161,7 @@ data(){
     formdata:{
       name: "",
     //owner: "",
-    installation: "",
+    Installation: "",
     number_hotel: "+967",
     number_hotel2: "+967",
     number_phone: "+967",
@@ -189,7 +189,7 @@ mounted(){
   fetch(geturl()+"account/accounts/", {
       
       headers: {"Content-Type": "application/json",
-    //"authorization": "Token "+this.user.token
+    "authorization": "Token "+this.user.token
 },      })
     .then(res => res.json())
     .then(data => {this.formdata3 = data
@@ -198,7 +198,7 @@ mounted(){
   fetch(geturl()+"hotels/installation/", {
       
       headers: {"Content-Type": "application/json",
-    //"authorization": "Token "+this.user.token
+    "authorization": "Token "+this.user.token
 },      })
     .then(res => res.json())
     .then(data => {this.formdata4 = data
@@ -220,7 +220,7 @@ methods: {
     fetch(geturl()+"hotels/hotel/", {
          method: "POST",
          headers: {"Content-Type": "application/json",
-      //"authorization": "Token "+this.user.token
+      "authorization": "Token "+this.user.token
 },
       body: JSON.stringify(this.formdata)
       })
@@ -238,7 +238,7 @@ methods: {
        fetch(geturl()+"places/residential/", {
       
         headers: {"Content-Type": "application/json",
-     // "authorization": "Token "+this.user.token
+     "authorization": "Token "+this.user.token
 },      })
       .then(res => res.json())
       .then(data => {this.formdata2 = data

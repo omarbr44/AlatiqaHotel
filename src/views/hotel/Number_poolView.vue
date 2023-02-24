@@ -6,7 +6,7 @@
    
          <h3 class="heading" style="display:initial;margin-left:2rem">المسابح</h3>
           <form style="display:initial;">
-    <router-link to="/AddNumber_poolView"> <button type="button" class="btn btn-primary">اضافة</button> </router-link>
+    <router-link to="/AddNumber_pool"> <button type="button" class="btn btn-primary">اضافة</button> </router-link>
          </form>
    
    
@@ -45,6 +45,7 @@
    export default {
    name:"Number_poolView",
    components:{looading},
+   props: ['id'],
    data(){
      return{
         formdata2:[],
@@ -53,10 +54,10 @@
      }
    },
    mounted() {
-          fetch(geturl()+"hotels/number_pool/", {
+          fetch(geturl()+"hotels/number_pool/?pool="+this.id, {
          
            headers: {"Content-Type": "application/json",
-        // "authorization": "Token "+this.user.token
+        "authorization": "Token "+this.user.token
    },      })
          .then(res => res.json())
          .then(data => {this.formdata2 = data

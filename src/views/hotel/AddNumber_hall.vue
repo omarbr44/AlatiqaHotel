@@ -62,7 +62,7 @@
   fetch(geturl()+"hotels/hall/", {
       
       headers: {"Content-Type": "application/json",
-    //"authorization": "Token "+this.user.token
+    "authorization": "Token "+this.user.token
 },      })
     .then(res => res.json())
     .then(data => {this.formdata2 = data
@@ -76,7 +76,7 @@
           fetch(geturl()+"hotels/number_hall/", {
            method: "POST",
            headers: {"Content-Type": "application/json",
-       // "authorization": "Token "+this.user.token
+       "authorization": "Token "+this.user.token
   },
         body: JSON.stringify(this.formdata)
         })
@@ -87,7 +87,7 @@
              this.err = data.error.details
            }
         else {        
-             // this.$router.push({name:'GuestView' })
+             this.$router.push({name:'HallView' })
             }
         }) 
       },

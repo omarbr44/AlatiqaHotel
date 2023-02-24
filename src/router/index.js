@@ -42,6 +42,8 @@ import updateBlackList from '../views/hotel/updateBlackList.vue'
 import GuestPrint from '../views/hotel/GuestPrint.vue'
 import ReportPrint from '../views/hotel/ReportPrint.vue'
 import GuestPrintForOwn from '../views/hotel/GuestPrintForOwn.vue'
+import GuestPoolView from '../views/hotel/GuestPoolView.vue'
+import GuestHallView from '../views/hotel/GuestHallView.vue'
 import Signup from '../views/hotel/Signup.vue'
 import Log_in from '../views/hotel/Log_in.vue'
 import _404 from '../views/hotel/_404.vue'
@@ -69,223 +71,238 @@ const router = createRouter({
       path: '/OwnerView',
       name: 'OwnerView',
       component: OwnerView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/InstallationView',
       name: 'InstallationView',
       component: InstallationView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddHotel',
       name: 'AddHotel',
       component: AddHotel,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddNumber_hall',
       name: 'AddNumber_hall',
       component: AddNumber_hall,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddNumber_pool',
       name: 'AddNumber_pool',
       component: AddNumber_pool,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddOwner',
       name: 'AddOwner',
       component: AddOwner,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddHall',
       name: 'AddHall',
       component: AddHall,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/HallView',
       name: 'HallView',
       component: HallView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
-      path: '/Number_hallView',
+      path: '/Number_hallView/:id',
       name: 'Number_hallView',
       component: Number_hallView,
-      //meta: {requiresAuth: true}
+      props:true,
+      meta: {requiresAuth: true}
     },
     {
       path: '/PoolView',
       name: 'PoolView',
       component: PoolView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
-      path: '/Number_poolView',
+      path: '/Number_poolView/:id',
       name: 'Number_poolView',
       component: Number_poolView,
-      //meta: {requiresAuth: true}
+      props:true,
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddPool',
       name: 'AddPool',
       component: AddPool,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/Addinstallation',
       name: 'Addinstallation',
       component: Addinstallation,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/GuestPrint/:id', 
       name: 'GuestPrint',
       component: GuestPrint,
       props:true,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
   },
     {
       path: '/ReportPrint/:id', 
       name: 'ReportPrint',
       component: ReportPrint,
       props:true,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
   },
     {
       path: '/GuestPrintForOwn/:id', 
       name: 'GuestPrintForOwn',
       component: GuestPrintForOwn,
       props:true,
-      //meta: {owner: true}
+      meta: {owner: true}
   },
     {
       path: '/AddGov',
       name: 'AddGov',
       component: AddGov,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddCity',
       name: 'AddCity',
       component: AddCity,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddSquare',
       name: 'AddSquare',
       component: AddSquare,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddMid',
       name: 'AddMid',
       component: AddMid,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddCountry',
       name: 'AddCountry',
       component: AddCountry,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/HotelView',
       name: 'HotelView',
       component: HotelView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/CityView',
       name: 'CityView',
       component: CityView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/GuestHallView',
+      name: 'GuestHallView',
+      component: GuestHallView,
+      meta: {owner: true}
+    },
+    {
+      path: '/GuestPoolView',
+      name: 'GuestPoolView',
+      component: GuestPoolView,
+      meta: {owner: true}
     },
     {
       path: '/SquareView',
       name: 'SquareView',
       component: SquareView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/CountryView', 
       name: 'CountryView',
       component: CountryView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/MidView', 
       name: 'MidView',
       component: MidView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/GovView', 
       name: 'GovView',
       component: GovView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/AddGuest', 
       name: 'AddGuest',
       component: AddGuest,
-      //meta: {owner: true}
+      meta: {owner: true}
     },
     {
       path: '/GuestView', 
       name: 'GuestView',
       component: GuestView,
-      //meta: {owner: true}
+      meta: {owner: true}
     },
     {
       path: '/AddCompanion', 
       name: 'AddCompanion',
       component: AddCompanion,
-      //meta: {owner: true}
+      meta: {owner: true}
     },
     {
       path: '/CompanionView/:idd', 
       name: 'CompanionView',
       component: CompanionView,
       props: true,
-      //meta: {owner: true}
+      meta: {owner: true}
     },
     {
-      path: '/AddReport', 
+      path: '/AddReport/:id', 
       name: 'AddReport',
       component: AddReport,
-      //meta: {owner: true}
+      props:true,
+      meta: {owner: true}
     },
     {
       path: '/AddBlackList', 
       name: 'AddBlackList',
       component: AddBlackList,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/ReportView', 
       name: 'ReportView',
       component: ReportView,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/updateehot/:idd', 
       name: 'updateehot',
       component: updateehot,
       props: true,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/updateBlackList/:idd', 
       name: 'updateBlackList',
       component: updateBlackList,
       props: true,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     
     {
@@ -297,21 +314,21 @@ const router = createRouter({
       path: '/BlackListView',
       name: 'BlackListView',
       component: BlackListView,
-      //meta:{requiresAuth: true}
+      meta:{requiresAuth: true}
     },
     {
       path: '/updategue/:idd', 
       name: 'updategue',
       component: updategue,
       props: true,
-      //meta: {owner: true}
+      meta: {owner: true}
     },
     {
       path: '/updatecomp/:idd', 
       name: 'updatecomp',
       component: updatecomp,
       props: true,
-      //meta: {owner: true}
+      meta: {owner: true}
     },
   
     {
@@ -319,7 +336,7 @@ const router = createRouter({
       name: 'updatereport',
       component: updatereport,
       props: true,
-      //meta: {requiresAuth: true}
+      meta: {requiresAuth: true}
     },
     {
       path: '/:catchAll(.*)', 
@@ -333,8 +350,12 @@ router.beforeEach((to, from, next) => {
   const user = useUserStore()
  user.token = JSON.parse( localStorage.getItem('token') )
  user.hotel =  localStorage.getItem('hotel') 
+ user.pool = localStorage.getItem('pool') 
+ user.hall = localStorage.getItem('hall') 
  user.is_woner = JSON.parse( localStorage.getItem('is_woner') )
  user.is_staff = JSON.parse( localStorage.getItem('is_staff') )
+ user.is_pool = JSON.parse( localStorage.getItem('is_pool') )
+ user.is_hall = JSON.parse( localStorage.getItem('is_hall') )
   if(to.matched.some((record)=> record.meta.requiresAuth)){
     if(user.token && user.is_staff){
       next()
@@ -352,7 +373,11 @@ router.beforeEach((to, from, next) => {
   const user = useUserStore()
   user.token = JSON.parse( localStorage.getItem('token') )
   user.hotel = localStorage.getItem('hotel') 
+  user.pool = localStorage.getItem('pool') 
+  user.hall = localStorage.getItem('hall') 
   user.is_woner = JSON.parse( localStorage.getItem('is_woner') )
+  user.is_pool = JSON.parse( localStorage.getItem('is_pool') )
+  user.is_hall = JSON.parse( localStorage.getItem('is_hall') )
   user.is_staff = JSON.parse( localStorage.getItem('is_staff') )
   if(to.matched.some((record)=> record.meta.owner)){
     if(user.token){

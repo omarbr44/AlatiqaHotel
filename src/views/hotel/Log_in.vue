@@ -74,10 +74,19 @@ import { useUserStore } from '@/stores/user'
                 load.value= false
        }
         else{
-            user.addToken(data.token,data.user,data.hotel)
-            user.addRole(data.is_staff,data.is_woner)
+            user.addToken(data.token,data.user,data.hotel,data.pool,data.hall)
+            user.addRole(data.is_staff,data.is_woner,data.is_pool,data.is_hall)
+            if(data.is_woner)
              router.push({
-               name:'GuestView', 
+                name:'GuestView'
+             })
+            else if(data.is_pool)
+             router.push({
+                name:'GuestPoolView'
+             })
+            else 
+             router.push({
+                name:'GuestHallView'
              })
         }
         }) 

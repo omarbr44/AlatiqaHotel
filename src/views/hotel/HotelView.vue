@@ -30,7 +30,6 @@
       <th scope="col"> الترتيب</th>
       <th scope="col">اسم الفندق</th>
       <th scope="col"> مكان الفندق</th>
-      <th scope="col">اسم المالك</th>
       <th scope="col" class="hidee"> رقم الهاتف</th>
       <th scope="col" class="hidee"> رقم الجوال </th>
       <th scope="col" class="hidee"> عدد الطوابق</th>
@@ -46,7 +45,6 @@
       <th  >{{keey.id}}</th>
       <td>       {{keey.name}} </td>
       <td>{{keey.residential_name}}</td>
-      <td>{{keey.owner}}</td>
       <td class="hidee">{{keey.number_hotel}} </td>
       <td class="hidee">  {{keey.number_phone}} </td>
       <td class="hidee">  {{keey.Floors}} </td>
@@ -102,7 +100,7 @@ data(){
   }
 },
 mounted() {
-       fetch(geturl()+"hotels/hotel/"+this.user.hotel, {
+       fetch(geturl()+"hotels/hotel/", {
       
       headers: {
         "Content-Type": "application/json",
@@ -112,11 +110,12 @@ mounted() {
       .then(res => res.json())
       .then(data => {
         if(!this.user.is_staff){
+         
         this.formdata1 = data
         this.formdata2.push(this.formdata1)}
         else
         this.formdata2 = data
-        
+        console.log(data)
         this.load = false
 
       })

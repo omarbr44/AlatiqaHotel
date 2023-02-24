@@ -64,6 +64,7 @@ import looading from '@/components/looading.vue'
 export default {
 name: 'AddReport',
 components:{looading},
+props:['id'],
 data(){
   return{
     formdata:{
@@ -71,6 +72,8 @@ data(){
     report: '',
     guest: '',
     hotel: '',
+    pool: '',
+    hall: '',
     },
     temguest: '',
      formdata2:[],
@@ -81,6 +84,7 @@ data(){
         
   }
 },
+
 methods: {
     postinfo(){
       this.load = true
@@ -93,10 +97,14 @@ methods: {
         else
         this.formdata.guest = this.temguest == '' ? '' :'lorem ipsum'
 
+      if(this.user.hotel!='undefined')
+        this.formdata.hotel = this.user.hotel
+      else if(this.user.pool!='undefined')
+    this.formdata.pool = this.user.pool
+      else if(this.user.hall!='undefined')
+    this.formdata.hall = this.user.hall
 
-
-    
-    this.formdata.hotel = this.user.hotel
+    console.log(this.formdata)
     fetch(geturl()+"guest/report/", {
          method: "POST",
          headers: {"Content-Type": "application/json",
@@ -110,23 +118,52 @@ methods: {
 
          if(data.error)
       this.err = data.error.details
-      else
-            this.$router.push({name:'GuestView' })
+      /*else
+            this.$router.push({name:'GuestView' })*/
       })
     },
 
       getinfo(){
-       fetch(geturl()+"guest/guest/?create_at=&hotel="+this.user.hotel+"&name=", {
-      
-        headers: {"Content-Type": "application/json",
-      "authorization": "Token "+this.user.token
-},
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        this.formdata2 = data
-      })
+        if(this.user.pool!='undefined'){
+          fetch(geturl()+"guest/guest/?create_at=&number_pool="+this.id, {
+         
+         headers: {"Content-Type": "application/json",
+       "authorization": "Token "+this.user.token
+ },
+       })
+       .then(res => res.json())
+       .then(data => {
+         console.log(data)
+         this.formdata2 = data
+       })
+        }
+       else if(this.user.hotel!='undefined'){
+          fetch(geturl()+"guest/guest/?create_at=&hotel="+this.user.hotel+"&name=", {
+         
+           headers: {"Content-Type": "application/json",
+         "authorization": "Token "+this.user.token
+   },
+         })
+         .then(res => res.json())
+         .then(data => {
+           console.log(data)
+           this.formdata2 = data
+         })
+        }
+        
+        else if(this.user.hall!='undefined'){
+          fetch(geturl()+"guest/guest/?create_at=&number_hall="+this.id, {
+         
+         headers: {"Content-Type": "application/json",
+       "authorization": "Token "+this.user.token
+ },
+       })
+       .then(res => res.json())
+       .then(data => {
+         console.log(data)
+         this.formdata2 = data
+       })
+        }
     },
 
      

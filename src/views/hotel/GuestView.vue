@@ -33,15 +33,16 @@
   </select>
 <button  type="button" class="btn btn-primary green_but" @click="filter()">اختيار الفندق</button>
 </div>
+
       <h3 class="heading" style="display:initial;margin-left:2rem">النزلاء</h3>
       <form style="display:initial;">
  <router-link class="mx-2" to="/AddGuest" v-if="user.is_woner"> <button  class="btn btn-primary">اضافة</button> </router-link>
  
- <router-link v-if="user.is_staff" :to="{ name: 'GuestPrint', params: { id: hotel_id} ,query:{createAt:DateFilter}}"> 
+ <router-link v-if="user.is_staff" :to="{ name: 'GuestPrint', params: { id: hotel_id} ,query:{createAt:DateFilter,type:'hotel'}}"> 
   <button  class="btn btn-primary">طباعة</button>
 </router-link>
 
- <router-link v-if="user.is_woner" :to="{ name: 'GuestPrintForOwn', params: { id: user.hotel} ,query:{createAt:DateFilter}}"> 
+ <router-link v-if="user.is_woner" :to="{ name: 'GuestPrintForOwn', params: { id: user.hotel} ,query:{createAt:DateFilter,type:'hotel'}}"> 
   <button  class="btn btn-primary">طباعة</button>
 </router-link>
       </form>
@@ -83,9 +84,9 @@
           <button  class="icon-button red"> <img src="../../assets/x.png" alt="" class="icon-small">
 </button>
         </form>
-         <router-link :to="{ name: 'updategue', params: { idd: keey.id}}"> <button   class="icon-button orange" > 
+         <!-- <router-link :to="{ name: 'updategue', params: { idd: keey.id}}"> <button   class="icon-button orange" > 
               <img src="../../assets/edit.png" alt="" class="icon-small">
-</button> </router-link>
+</button> </router-link> -->
 <!--
 <router-link :to="{ name: 'GuestPrint', params: { id: keey.id}}"> <button   class="icon-button orange" > 
 </button> </router-link> -->
@@ -133,6 +134,8 @@ data(){
      formdata2:[],
      formdata3:[],
      formdata4:{},
+     formdata5:{},
+     formdata6:{},
    /*  guestCheckout:{
       name: "",
     phone: "",
@@ -175,20 +178,35 @@ mounted() {
       .then(res => res.json())
       .then(data => {
            this.formdata3 = data
+           this.load = false
       })
+
+      /*fetch(geturl()+"guest/guest/?create_at="+this.DateFilter+"&hotel=", {
+      
+      headers: {"Content-Type": "application/json",
+    "authorization": "Token "+this.user.token
+},      })
+    .then(res => res.json())
+    .then(data => {this.formdata2 = data
+      this.load = false
+        this.hotel_id = this.formdata2[0].hotel
+    })*/
     
     }
-     
-  fetch(geturl()+"guest/guest/?create_at="+this.DateFilter+"&hotel="+this.user.hotel, {
+    else{
+
+      fetch(geturl()+"guest/guest/?create_at="+this.DateFilter+"&hotel="+this.user.hotel, {
+          
+            headers: {"Content-Type": "application/json",
+          "authorization": "Token "+this.user.token
+    },      })
+          .then(res => res.json())
+          .then(data => {this.formdata2 = data
+            this.load = false
+              // this.hotel_id = this.formdata2[0].hotel
+          })
+    }
       
-        headers: {"Content-Type": "application/json",
-      "authorization": "Token "+this.user.token
-},      })
-      .then(res => res.json())
-      .then(data => {this.formdata2 = data
-        this.load = false
-          // this.hotel_id = this.formdata2[0].hotel
-      })
       
      
       
@@ -199,7 +217,7 @@ mounted() {
           if(this.user.is_woner){
             this.HotelFilter = this.user.hotel
           }
-          
+
           fetch(geturl()+"guest/guest/?create_at="+this.DateFilter+"&hotel="+this.HotelFilter, {
       
             headers: {"Content-Type": "application/json",

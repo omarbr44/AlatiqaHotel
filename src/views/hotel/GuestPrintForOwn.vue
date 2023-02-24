@@ -38,14 +38,26 @@
                  <p style="margin: 0;margin-left: 5rem;"> اليوم {{day}} </p>
                  <p style="margin: 0;margin-left: 5rem;"> {{date.getHours()}}:{{date.getMinutes()}} الساعة</p>
              </div>
-         <div style="border: 1px solid;
+         <div v-if="typeOfplace=='فندق'" style="border: 1px solid;
          padding: 10px;
          text-align: end;">
                  <p style="margin: 0;margin-left: 5rem;">اسم الفندق : {{formdata3.name}} </p>
-                 <p style="margin: 0;margin-left: 5rem;"> مالك الفندق : {{formdata3.owner}} </p>
+                 <!-- <p style="margin: 0;margin-left: 5rem;"> مالك الفندق : {{formdata3.owner}} </p> -->
                  <p style="margin: 0;margin-left: 5rem;"> منطقة الفندق : {{formdata3.residential_name}} </p>
-                 <p style="margin: 0;margin-left: 5rem;"> رقم الهاتف : {{formdata3.number_hotel}} </p>
-             </div>
+                 <p  style="margin: 0;margin-left: 5rem;"> رقم الهاتف : {{formdata3.number_hotel}} </p>
+             </div> 
+         <div v-if="typeOfplace=='صالة'" style="border: 1px solid ;
+         padding: 10px;
+         text-align: end;">
+                 <p style="margin: 0;margin-left: 5rem;">اسم الصالة : {{formdata3.name}} </p>
+                 <p style="margin: 0;margin-left: 5rem;"> المنشأة  : {{formdata3.Installation_name}} </p>
+             </div> 
+         <div v-if="typeOfplace=='مسبح'" style="border: 1px solid;
+         padding: 10px;
+         text-align: end;">
+                 <p style="margin: 0;margin-left: 5rem;">اسم المسبح : {{formdata3.name}} </p>
+                 <p style="margin: 0;margin-left: 5rem;"> المنشأة  : {{formdata3.Installation_name}} </p>
+             </div> 
          
        
              
@@ -53,7 +65,7 @@
         
      
      
-         <table class="table table-striped" style="text-align: center;" >
+         <table class="table table-striped" style="text-align: center; " >
        <thead>
          <tr>
            <th  rowspan="2">تاريخ الخروج</th>
@@ -62,13 +74,13 @@
           <!-- <th rowspan="2"> الهوية</th> -->
            <th rowspan="2">  رقم الجوال  </th>
            <th rowspan="2">  المديرية </th>
-           <th rowspan="2"> الفندق  </th>
+           <!-- <th rowspan="2"> {{typeOfplace}}  </th> -->
            <th rowspan="2">الجنسية  </th>
            <th rowspan="2"> الاسم </th>
                  </tr>
        </thead>
        <tbody>
-         <div v-for="key in formdata2" :key="key.id" style="display: contents;" class="my-2">
+         <div v-for="key in formdata2" :key="key.id" style="display: contents;" class="my-2 ">
           <br>
          <tr >
             
@@ -78,7 +90,10 @@
         <!--   <th >  <img :src="key.pic_document" alt="" class="wii"> </th> -->
            <th >{{key.phone}}</th>
            <th >{{key.directorates_name}}</th>
-           <th >{{key.hotel_name}}</th>
+           <!-- <th v-if="typeOfplace=='فندق'">{{key.hotel_name}}</th>
+           <th v-else-if="typeOfplace=='صالة'">{{key.hall_name}}</th>
+           <th v-else-if="typeOfplace=='مسبح'">{{key.pool_name}}</th>
+           <th v-else></th> -->
            <th >{{key.nationality == '1' ? 'يمني':'غير يمني'}}</th>
               <th >{{key.name}}</th>
               <th >النزيل </th>
@@ -142,7 +157,10 @@
   
      const formdata2 = ref(null)
      const formdata3 = ref(null)
-     
+     const typeOfplace = ref('')
+    const hall =localStorage.getItem('hall')
+    const pool =localStorage.getItem('pool')
+
     const route = useRoute()
      const date = new Date()
      const days =['الاحد',"الاثنين","الثلاثاء","الاربعاء","الخميس","الجمعه","السبت"]
@@ -154,8 +172,9 @@
     
     const load = ref(true)
      onMounted(()=>{
-           
       // get guest
+      if(route.query.type=='hotel'){
+        typeOfplace.value = 'فندق'
              fetch(geturl()+"guest/print/?create_at="+route.query.createAt+"&hotel="+route.params.id, {
              
               headers: {"Content-Type": "application/json",
@@ -166,7 +185,7 @@
               load.value = false
              })
 
-             fetch(geturl()+"hotels/hotel/"+user.hotel, {
+           fetch(geturl()+"hotels/hotel/"+user.hotel, {
              
              headers: {"Content-Type": "application/json",
        "authorization": "Token "+user.token
@@ -176,10 +195,55 @@
             
             })
           
-     
+          }
+          else if(route.query.type=='hall'){
+            typeOfplace.value = 'صالة'
+
+            fetch(geturl()+"guest/print/?create_at="+route.query.createAt+"&number_hall="+route.params.id, {
+             
+             headers: {"Content-Type": "application/json",
+       "authorization": "Token "+user.token
+ },           })
+            .then(res => res.json())
+            .then(data => {formdata2.value = data
+             load.value = false
+            })
+            fetch(geturl()+"hotels/hall/"+hall, {
+             
+             headers: {"Content-Type": "application/json",
+       "authorization": "Token "+user.token
+ },           })
+            .then(res => res.json())
+            .then(data => {formdata3.value = data
+            })
+          }
+          else if(route.query.type=='pool'){
+            typeOfplace.value = 'مسبح'
+
+            fetch(geturl()+"guest/print/?create_at="+route.query.createAt+"&number_pool="+route.params.id, {
+             
+             headers: {"Content-Type": "application/json",
+       "authorization": "Token "+user.token
+ },           })
+            .then(res => res.json())
+            .then(data => {formdata2.value = data
+             load.value = false
+            })
+            fetch(geturl()+"hotels/pool/"+pool, {
+             
+             headers: {"Content-Type": "application/json",
+       "authorization": "Token "+user.token
+ },           })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data)
+              formdata3.value = data
+            })
+          }
      
      
      })
+    
      
      </script>
      

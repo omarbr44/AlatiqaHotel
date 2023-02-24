@@ -27,7 +27,7 @@
          
          <th scope="row" >{{keey.id}}</th>
          <td>       {{keey.name}} </td>
-         <td> {{keey.owner}}</td>
+         <td> {{keey.owner_name}}</td>
         
        
        </tr>
@@ -68,7 +68,7 @@
           fetch(geturl()+"hotels/installation/", {
          
            headers: {"Content-Type": "application/json",
-        // "authorization": "Token "+this.user.token
+        "authorization": "Token "+this.user.token
    },      })
          .then(res => res.json())
          .then(data => {this.formdata2 = data

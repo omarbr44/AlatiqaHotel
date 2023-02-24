@@ -49,14 +49,15 @@
        <table class="table table-striped" style="text-align: center;" >
      <thead>
        <tr>
-         <th  rowspan="2">تاريخ الخروج</th>
-         <th rowspan="2">تاريخ الدخول</th>
-         <th rowspan="2">رقم الهوية</th>
-         <th rowspan="2">  رقم الجوال  </th>
-         <th rowspan="2">  المديرية </th>
-         <th rowspan="2"> الفندق  </th>
-         <th rowspan="2">الجنسية  </th>
-         <th rowspan="2"> الاسم </th>
+        <th  rowspan="2">تاريخ الخروج</th>
+           <th rowspan="2">تاريخ الدخول</th>
+           <th rowspan="2">رقم الهوية</th>
+          <!-- <th rowspan="2"> الهوية</th> -->
+           <th rowspan="2">  رقم الجوال  </th>
+           <th rowspan="2">  المديرية </th>
+           <th rowspan="2"> {{typeOfplace}}  </th>
+           <th rowspan="2">الجنسية  </th>
+           <th rowspan="2"> الاسم </th>
                </tr>
      </thead>
      <tbody>
@@ -69,7 +70,10 @@
          <th >  {{key.number}} </th>
          <th >{{key.phone}}</th>
          <th >{{key.directorates_name}}</th>
-         <th >{{key.hotel_name}}</th>
+         <th v-if="typeOfplace=='فندق'">{{key.hotel_name}}</th>
+           <th v-else-if="typeOfplace=='صالة'">{{key.hall_name}}</th>
+           <th v-else-if="typeOfplace=='مسبح'">{{key.pool_name}}</th>
+           <th v-else></th>
          <th >{{key.nationality == '1' ? 'يمني':'غير يمني'}}</th>
             <th >{{key.name}}</th>
             <th >النزيل </th>
@@ -132,6 +136,9 @@
  const user = useUserStore()
 
    const formdata2 = ref(null)
+   const typeOfplace = ref('')
+    const hall =localStorage.getItem('hall')
+    const pool =localStorage.getItem('pool')
    
   const route = useRoute()
    const date = new Date()
@@ -144,17 +151,48 @@
   
   const load = ref(true)
    onMounted(()=>{
-         
     // get guest
-           fetch(geturl()+"guest/print/?create_at="+route.query.createAt+"&hotel="+route.params.id, {
+    if(route.query.type=='hotel'){
+        typeOfplace.value = 'فندق'
+             fetch(geturl()+"guest/print/?create_at="+route.query.createAt+"&hotel="+route.params.id, {
+             
+              headers: {"Content-Type": "application/json",
+        "authorization": "Token "+user.token
+  },           })
+             .then(res => res.json())
+             .then(data => {formdata2.value = data
+              load.value = false
+             })
+          
+          }
+          else if(route.query.type=='hall'){
+            typeOfplace.value = 'صالة'
+
+            fetch(geturl()+"guest/print/?create_at="+route.query.createAt+"&number_hall="+route.params.id, {
+             
+             headers: {"Content-Type": "application/json",
+       "authorization": "Token "+user.token
+ },           })
+            .then(res => res.json())
+            .then(data => {formdata2.value = data
+             load.value = false
+            })
            
-            headers: {"Content-Type": "application/json",
-      "authorization": "Token "+user.token
-},           })
-           .then(res => res.json())
-           .then(data => {formdata2.value = data
-            load.value = false
-           })
+          }
+          else if(route.query.type=='pool'){
+            typeOfplace.value = 'مسبح'
+
+            fetch(geturl()+"guest/print/?create_at="+route.query.createAt+"&number_pool="+route.params.id, {
+             
+             headers: {"Content-Type": "application/json",
+       "authorization": "Token "+user.token
+ },           })
+            .then(res => res.json())
+            .then(data => {formdata2.value = data
+             load.value = false
+            })
+          
+          }
         
    
    

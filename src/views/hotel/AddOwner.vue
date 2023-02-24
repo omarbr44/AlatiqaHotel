@@ -132,7 +132,7 @@
       fetch(geturl()+"hotels/owner/", {
            method: "POST",
            headers: {"Content-Type": "application/json",
-       // "authorization": "Token "+this.user.token
+       "authorization": "Token "+this.user.token
   },
         body: JSON.stringify(this.formdata)
         })
@@ -143,7 +143,7 @@
              this.err = data.error.details
            }
         else {        
-             // this.$router.push({name:'GuestView' })
+             this.$router.push({name:'OwnerView' })
             }
         }) 
       },
@@ -153,7 +153,7 @@
          fetch(geturl()+"places/residential/", {
         
           headers: {"Content-Type": "application/json",
-        //"authorization": "Token "+this.user.token
+        "authorization": "Token "+this.user.token
   },
         })
         .then(res => res.json())

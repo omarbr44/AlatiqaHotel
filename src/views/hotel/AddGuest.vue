@@ -72,7 +72,7 @@
   <option value="4">مؤتمر</option>
 </select>
 </div>
-  <div class="mb-3 input-in-con">
+  <div class="mb-3 input-in-con" v-if="user.is_woner"> <!-- do v-if -->
     <div v-if="this.err">
   <div v-if="this.err.reservation"  class="alert alert-danger" role="alert"> {{ this.err.reservation[0]}}</div>
 </div>
@@ -82,6 +82,27 @@
   <option value="1">غرفة</option>
   <option value="2">جناح</option>
   <option value="3">شقة</option>
+</select>
+</div>
+<div class="mb-3 input-in-con" v-if="is_pool"> <!-- do v-if -->
+    <div v-if="this.err">
+  <div v-if="this.err.number_pool"  class="alert alert-danger" role="alert"> {{ this.err.number_pool[0]}}</div>
+</div>
+ <label for="exampleFormControlInput1" class="form-label">المسبح</label>
+ <select class="form-select half" aria-label="Default select example" v-model="formdata.number_pool">
+  <option disabled  selected>اختر المسبح</option>
+  <option  v-for="keey in formdata4" :value="keey.id" :key="keey.id">{{keey.name}}</option>
+</select>
+</div>
+<div class="mb-3 input-in-con" v-if="is_hall"> <!-- do v-if -->
+    <div v-if="this.err">
+  <div v-if="this.err.number_hall"  class="alert alert-danger" role="alert"> {{ this.err.number_hall[0]}}</div>
+</div>
+ <label for="exampleFormControlInput1" class="form-label">الصالة</label>
+ <select class="form-select half" aria-label="Default select example" v-model="formdata.number_hall">
+  <option disabled  selected>اختر الصالة</option>
+  <option  v-for="keey in formdata5" :value="keey.id" :key="keey.id">{{keey.name}}</option>
+
 </select>
 </div>
 <div class="container">
@@ -134,7 +155,7 @@
 
 
 
- <div v-for=" keey,index in listt" :key="keey.inc" >
+ <div v-for=" keey,index in listt" :key="keey.inc" >  <!-- do v-if -->
     <h3 class="heading" >{{ index+1 }} المرافق </h3>
      <div class="mb-3 input-in-con">
                <div v-if="this.errList">
@@ -206,9 +227,10 @@
 
 </div>
 
-
-<div v-if="ShowButton" class="flex last">
+<div> <!-- do v-if -->
+<div v-if="ShowButton" class="flex last"> 
   <p @click="shoecom" class="btn btn-primary">اضافة مرافق</p>
+</div>
 </div>
 
 
@@ -244,7 +266,7 @@ data(){
     document: "",
     gender: "",
     nationality: "",
-    reservation: '',
+    reservation: null,
     number: '',
     start: '',
     end: '',
@@ -277,17 +299,45 @@ data(){
     temdirectorates: '',
      formdata2:[],
      formdata3:[],
+     formdata4:[],
+     formdata5:[],
       err:null,
       errList: [],
       listt:[],
       inc : 0,
       ShowButton : false,
       load: false,
-      user : useUserStore()
-
-        
+      user : useUserStore(),
+      is_hall: JSON.parse( localStorage.getItem('is_hall') ),
+      is_pool: JSON.parse( localStorage.getItem('is_pool') ),
+      pool: localStorage.getItem('pool'),
+      hall: localStorage.getItem('hall'),
+     
   }
 
+},
+mounted(){
+  if(this.is_hall){
+  fetch(geturl()+"hotels/number_hall/?hall="+this.hall, {
+      
+      headers: {"Content-Type": "application/json",
+    "authorization": "Token "+this.user.token
+},      })
+    .then(res => res.json())
+    .then(data => {this.formdata5 = data
+    })
+  }
+
+  if(this.is_pool){
+  fetch(geturl()+"hotels/number_pool/?pool="+this.pool, {
+      
+      headers: {"Content-Type": "application/json",
+    "authorization": "Token "+this.user.token
+},      })
+    .then(res => res.json())
+    .then(data => {this.formdata4 = data
+    })
+  }
 },
 methods: {
   
@@ -312,6 +362,7 @@ methods: {
 
   
   shoecom(){
+    if(this.user.is_woner){
         if(this.inc>0){
           fetch(geturl()+"guest/companion/", {
          method: "POST",
@@ -352,7 +403,7 @@ methods: {
     this.errList.push(this.errcompanionss)
     this.inc = ++this.inc
   }
-
+    }
   },
     postinfo(){
       this.load = true
@@ -370,6 +421,7 @@ methods: {
      
       if(this.formdata.end == '')
             this.formdata.end = null
+            if(this.user.is_woner)
             this.formdata.hotel = this.user.hotel
     fetch(geturl()+"guest/guest/", {
          method: "POST",
@@ -385,14 +437,16 @@ methods: {
            this.err = data.error.details
          }
       else {
+        if(this.user.is_woner){
       this.$refs.AddButton.setAttribute('disabled',true)
         this.ShowButton = true;
         this.err = null
         this.companionss.guest= data.id
-       
+        }
            // this.$router.push({name:'GuestView' })
           }
       }) 
+      
     },
 
     
@@ -408,7 +462,8 @@ methods: {
       })
     }
     
-}
+
+  }
 }
 </script>
 

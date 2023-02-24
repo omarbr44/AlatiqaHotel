@@ -68,7 +68,7 @@
           fetch(geturl()+"hotels/owner/", {
          
            headers: {"Content-Type": "application/json",
-        // "authorization": "Token "+this.user.token
+        "authorization": "Token "+this.user.token
    },      })
          .then(res => res.json())
          .then(data => {this.formdata2 = data

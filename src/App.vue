@@ -15,13 +15,26 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                      
-                     <li> <router-link to="/GuestView" class="dropdown-item dropp" >نزيل</router-link> </li>
+                     <li v-if="user.is_staff || user.is_woner"> <router-link to="/GuestView" class="dropdown-item dropp" >نزيل فندق</router-link> </li>
+                     <li v-if="user.is_staff || user.is_pool"> <router-link to="/GuestPoolView" class="dropdown-item dropp" >نزيل مسبح</router-link> </li>
+                     <li v-if="user.is_staff || user.is_hall"> <router-link to="/GuestHallView" class="dropdown-item dropp" >نزيل صالة</router-link> </li>
                      <li v-if="user.is_staff"> <router-link to="/ReportView" class="dropdown-item dropp" >شكاوي</router-link> </li>
-                     <li v-if="!user.is_staff"> <router-link to="/AddReport" class="dropdown-item dropp" >شكاوي</router-link> </li>
+                     <li v-if="!user.is_staff && user.is_woner"> <router-link to="/AddReport/1" class="dropdown-item dropp" >شكاوي</router-link> </li>
             
             </ul>
           </li>
         
+           <li class="nav-item dropdown" v-if="user.is_staff">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              المنشئات والمالكين
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                     
+                     <li> <router-link to="/InstallationView" class="dropdown-item dropp" >المنشئات</router-link> </li>
+                     <li> <router-link to="/OwnerView" class="dropdown-item dropp" >المالكين</router-link> </li>
+            
+            </ul>
+          </li>
            <li class="nav-item dropdown" v-if="user.is_staff">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               الفنادق
@@ -29,6 +42,8 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                      
                      <li> <router-link to="/HotelView" class="dropdown-item dropp" >فندق</router-link> </li>
+                     <li> <router-link to="/poolView" class="dropdown-item dropp" >مسبح</router-link> </li>
+                     <li> <router-link to="/hallView" class="dropdown-item dropp" >صالة</router-link> </li>
             
             </ul>
           </li>
