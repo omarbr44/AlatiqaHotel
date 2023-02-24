@@ -7,7 +7,7 @@ import AddNumber_hall from '../views/hotel/AddNumber_hall.vue'
 import AddPool from '../views/hotel/AddPool.vue'
 import AddHall from '../views/hotel/AddHall.vue'
 import AddOwner from '../views/hotel/AddOwner.vue'
-import Addinstallationn from '../views/hotel/Addinstallationn.vue'
+import Addinst from '../views/hotel/AddInst.vue'
 import AddGov from '../views/hotel/AddGov.vue'
 import AddCity from '../views/hotel/AddCity.vue'
 import AddSquare from '../views/hotel/AddSquare.vue'
@@ -141,10 +141,11 @@ const router = createRouter({
       component: AddPool,
       meta: {requiresAuth: true}
     },
+   
     {
-      path: '/Addinstallationn',
-      name: 'Addinstallationn',
-      component: Addinstallationn,
+      path: '/Addinst',
+      name: 'Addinst',
+      component: Addinst,
       meta: {requiresAuth: true}
     },
     {

@@ -87,7 +87,7 @@
   import looading from '@/components/looading.vue'
   
   export default {
-  name: 'AddInstallationn', 
+  name: 'AddInst', 
   components:{looading},
   data(){
     return{
@@ -122,7 +122,6 @@
   },
   
       postinfo(){
-
         this.load = true
   
         this.formdata3 = this.formdata3.filter((e) => {
