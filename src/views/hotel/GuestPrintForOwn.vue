@@ -80,7 +80,7 @@
                  </tr>
        </thead>
        <tbody>
-         <div v-for="key in formdata2" :key="key.id" style="display: contents;" class="my-2 ">
+         <div v-for="key in formdata2" :key="key.id" style="display: contents;" class="my-2  ">
           <br>
          <tr >
             
