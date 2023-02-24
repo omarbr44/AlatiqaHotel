@@ -87,7 +87,7 @@
   import looading from '@/components/looading.vue'
   
   export default {
-  name: 'AddInstallation', 
+  name: 'AddInstallationn', 
   components:{looading},
   data(){
     return{
