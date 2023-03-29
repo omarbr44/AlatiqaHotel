@@ -6,7 +6,7 @@
    
          <h3 class="heading" style="display:initial;margin-left:2rem">المنشئات</h3>
           <form style="display:initial;">
-    <router-link to="/AddInst"> <button type="button" class="btn btn-primary">اضافة</button> </router-link>
+    <router-link to="/AddInstallationn"> <button type="button" class="btn btn-primary">اضافة</button> </router-link>
          </form>
    
    
