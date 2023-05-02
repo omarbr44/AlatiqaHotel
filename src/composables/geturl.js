@@ -1,4 +1,4 @@
 const geturl = () => {
-    return 'https://h0tal.pythonanywhere.com/'
+    return 'https://hote1.pythonanywhere.com/'
 }
 export default geturl

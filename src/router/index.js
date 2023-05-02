@@ -47,6 +47,12 @@ import GuestHallView from '../views/hotel/GuestHallView.vue'
 import Signup from '../views/hotel/Signup.vue'
 import Log_in from '../views/hotel/Log_in.vue'
 import _404 from '../views/hotel/_404.vue'
+import updatepool from '../views/hotel/updatepool.vue'
+import updatenumber_pool from '../views/hotel/updatenumber_pool.vue'
+import updatehall from '../views/hotel/updatehall.vue'
+import numberhallupdate from '../views/hotel/numberhallupdate.vue'
+import updateowner from '../views/hotel/updateowner.vue'
+import updateInstallation from '../views/hotel/updateInstallation.vue'
 
 
 const router = createRouter({
@@ -71,6 +77,48 @@ const router = createRouter({
       path: '/OwnerView',
       name: 'OwnerView',
       component: OwnerView,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/updateowner/:idd',
+      name: 'updateowner',
+      component: updateowner,
+      props:true,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/updateInstallation/:idd',
+      name: 'updateInstallation',
+      component: updateInstallation,
+      props:true,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/updatepool/:idd',
+      name: 'updatepool',
+      component: updatepool,
+      props:true,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/updatehall/:idd',
+      name: 'updatehall',
+      component: updatehall,
+      props:true,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/numberhallupdate/:idd',
+      name: 'numberhallupdate',
+      component: numberhallupdate,
+      props:true,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/updatenumber_pool/:idd',
+      name: 'updatenumber_pool',
+      component: updatenumber_pool,
+      props:true,
       meta: {requiresAuth: true}
     },
     {

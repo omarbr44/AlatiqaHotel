@@ -26,7 +26,7 @@
    <div class="flex last">
     <button ref="AddButton" class="btn btn-primary">
       <looading v-if="load"/>
-      <span v-else>اضافة</span>
+      <span v-else>تعديل</span>
     </button>
   </div>
         </form>
@@ -41,7 +41,8 @@
   import looading from '@/components/looading.vue'
   
   export default {
-  name: 'AddNumber_pool', 
+  name: 'updatenumber_pool', 
+  props: ['idd'],
   components:{looading},
   data(){
     return{
@@ -50,6 +51,7 @@
         pool:'',
       },
        formdata2:[],
+       formdata3:[],
         err:null,
         load: false,
         user : useUserStore()
@@ -65,14 +67,25 @@
     .then(res => res.json())
     .then(data => {this.formdata2 = data
     })
+  fetch(geturl()+"hotels/number_pool/"+this.idd+'/', {
+      
+      headers: {"Content-Type": "application/json",
+    "authorization": "Token "+this.user.token
+},      })
+    .then(res => res.json())
+    .then(data => {this.formdata3 = data
+
+        this.formdata.name = this.formdata3.name
+        this.formdata.pool = this.formdata3.pool
+    })
 },
   methods: {
     
       postinfo(){
         this.load = true
        
-          fetch(geturl()+"hotels/number_pool/", {
-           method: "POST",
+          fetch(geturl()+"hotels/number_pool/"+this.idd+'/', {
+           method: "PUT",
            headers: {"Content-Type": "application/json",
        "authorization": "Token "+this.user.token
   },

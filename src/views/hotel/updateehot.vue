@@ -22,13 +22,7 @@
       <option v-if="work" v-for="keyy in formdata2" >{{keyy.name}}</option>
   </datalist>
 </div>
-  <div class="mb-3 input-in-con">
-     <div v-if="this.err">
-  <div v-if="this.err.owner"  class="alert alert-danger" role="alert"> {{ this.err.owner[0]}}</div>
-</div>
-  <label for="exampleFormControlInput1" class="form-label">اسم مالك الفندق</label>
-  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="ادخل اسم مالك الفندق " v-model="formdata.owner">
-</div>
+
 <div class="flex">
   <div class="mb-3 input-in-con half">
        <div v-if="this.err">
@@ -103,6 +97,16 @@
   <option  v-for="keey in formdata4" :value="keey.id" :key="keey.id">{{keey.username}}</option>
 </select>
 </div>
+<div class="mb-3 input-in-con  ">
+           <div v-if="this.err">
+  <div v-if="this.err.Installation"  class="alert alert-danger" role="alert"> {{ this.err.Installation[0]}}</div>
+</div>
+  <label for="exampleFormControlInput1" class="form-label">المنشأة</label>
+ <select class="form-select " aria-label="Default select example" v-model="formdata.Installation" >
+  <option disabled selected>اختر المنشاة</option>
+  <option  v-for="keey in formdata5" :value="keey.id" :key="keey.id">{{keey.name}}</option>
+</select>
+</div>
 <div class="flex last">
   <div class="mb-3 input-in-con half last-50">
       <div v-if="this.err">
@@ -149,6 +153,7 @@ data() {
     rooms: '',
     Wings: '',
     apartment: '',
+    Installation:'',
     accounts: '',
     status: '',
     residential: ''
@@ -157,6 +162,7 @@ data() {
      formdata2:[],
      formdata3:[],
      formdata4:[],
+     formdata5:[],
      temformdata3:[],
      work:false,
      err:null,
@@ -200,6 +206,14 @@ data() {
     .then(res => res.json())
     .then(data => {this.formdata4 = data
     })
+    fetch(geturl()+"hotels/installation/", {
+      
+      headers: {"Content-Type": "application/json",
+    "authorization": "Token "+this.user.token
+},      })
+    .then(res => res.json())
+    .then(data => {this.formdata5 = data
+    })
     
        fetch(geturl()+"hotels/hotel/", {
       
@@ -224,6 +238,7 @@ data() {
             this.formdata.apartment = this.formdata2[0].apartment
             this.formdata.status = this.formdata2[0].status
             this.formdata.accounts = this.formdata2[0].accounts
+            this.formdata.Installation = this.formdata2[0].Installation
             this.temresidential = this.formdata2[0].residential_name
            
       })

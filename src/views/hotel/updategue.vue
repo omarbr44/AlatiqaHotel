@@ -1,7 +1,5 @@
 <template>
   
-
-
   <div class="container">
       <h3 class="heading">النزلاء</h3>
 
@@ -14,20 +12,21 @@
   <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="ادخل اسم النزيل " v-model="formdata.name">
 </div>
         <div class="mb-3 input-in-con">
-            <div v-if="this.err">
+           <div v-if="this.err">
   <div v-if="this.err.phone"  class="alert alert-danger" role="alert"> {{ this.err.phone[0]}}</div>
 </div>
               <label for="exampleFormControlInput1" class="form-label">رقم النزيل</label>
-  <input type="text" maxlength="13" class="form-control" list="lis" id="exampleFormControlInput1" placeholder="ادخل رقم النزيل" v-model="formdata.phone">
+  <input type="text" maxlength="13"   class="form-control ltr" list="lis" id="exampleFormControlInput1" placeholder="ادخل رقم النزيل" v-model="formdata.phone">
   
 </div>
 <div class="form-check">
+  
   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" v-model="formdata.family">
   <label class="form-check-label" for="flexCheckDefault">
 اسرة  </label>
 </div>
   <div class="mb-3 input-in-con">
-     <div v-if="this.err">
+        <div v-if="this.err">
   <div v-if="this.err.document"  class="alert alert-danger" role="alert"> {{ this.err.document[0]}}</div>
 </div>
  <label for="exampleFormControlInput1" class="form-label">الوثيقة</label>
@@ -39,7 +38,7 @@
 </select>
 </div>
   <div class="mb-3 input-in-con">
-      <div v-if="this.err">
+    <div v-if="this.err">
   <div v-if="this.err.gender"  class="alert alert-danger" role="alert"> {{ this.err.gender[0]}}</div>
 </div>
  <label for="exampleFormControlInput1" class="form-label">الجنس</label>
@@ -50,7 +49,7 @@
 </select>
 </div>
   <div class="mb-3 input-in-con">
-     <div v-if="this.err">
+    <div v-if="this.err">
   <div v-if="this.err.nationality"  class="alert alert-danger" role="alert"> {{ this.err.nationality[0]}}</div>
 </div>
  <label for="exampleFormControlInput1" class="form-label">الجنسية</label>
@@ -61,7 +60,20 @@
 </select>
 </div>
   <div class="mb-3 input-in-con">
-      <div v-if="this.err">
+    <div v-if="this.err">
+  <div v-if="this.err.purpose"  class="alert alert-danger" role="alert"> {{ this.err.purpose[0]}}</div>
+</div>
+ <label for="exampleFormControlInput1" class="form-label">الغرض من الحجز</label>
+ <select class="form-select half" aria-label="Default select example" v-model="formdata.purpose">
+  <option disabled  selected>اختر الغرض من الحجز</option>
+  <option value="1">نشاط اجتماعي</option>
+  <option value="2">الراحة</option>
+  <option value="3">فعاليات</option>
+  <option value="4">مؤتمر</option>
+</select>
+</div>
+  <div class="mb-3 input-in-con" v-if="user.is_woner"> <!-- do v-if -->
+    <div v-if="this.err">
   <div v-if="this.err.reservation"  class="alert alert-danger" role="alert"> {{ this.err.reservation[0]}}</div>
 </div>
  <label for="exampleFormControlInput1" class="form-label">الحجز</label>
@@ -72,9 +84,32 @@
   <option value="3">شقة</option>
 </select>
 </div>
+<div class="mb-3 input-in-con" v-if="is_pool"> <!-- do v-if -->
+    <div v-if="this.err">
+  <div v-if="this.err.number_pool"  class="alert alert-danger" role="alert"> {{ this.err.number_pool[0]}}</div>
+</div>
+ <label for="exampleFormControlInput1" class="form-label">المسبح</label>
+ <select class="form-select half" aria-label="Default select example" v-model="formdata.number_pool">
+  <option disabled  selected>اختر المسبح</option>
+  <option  v-for="keey in formdata4" :value="keey.id" :key="keey.id">{{keey.name}}</option>
+</select>
+</div>
+<div class="mb-3 input-in-con" v-if="is_hall"> <!-- do v-if -->
+    <div v-if="this.err">
+  <div v-if="this.err.number_hall"  class="alert alert-danger" role="alert"> {{ this.err.number_hall[0]}}</div>
+</div>
+ <label for="exampleFormControlInput1" class="form-label">الصالة</label>
+ <select class="form-select half" aria-label="Default select example" v-model="formdata.number_hall">
+  <option disabled  selected>اختر الصالة</option>
+  <option  v-for="keey in formdata5" :value="keey.id" :key="keey.id">{{keey.name}}</option>
+
+</select>
+</div>
+<div class="container">
 <div class="flex">
   <div class="mb-3 input-in-con half">
-      <div v-if="this.err">
+      
+   <div v-if="this.err">
   <div v-if="this.err.number"  class="alert alert-danger" role="alert"> {{ this.err.number[0]}}</div>
 </div>
   <label for="exampleFormControlInput1" class="form-label"> رقم الوثيقة </label>
@@ -89,22 +124,17 @@
   <input type="file" class="form-control half" id="exampleFormControlInput1" placeholder="ادخل رقم الهاتف " ref="file" @change="immg()">
 </div>
 </div>
-<div class="flex">
-  <div class="mb-3 input-in-con half">
-      <div v-if="this.err">
-  <div v-if="this.err.start"  class="alert alert-danger" role="alert"> {{ this.err.start[0]}}</div>
 </div>
-  <label for="exampleFormControlInput1" class="form-label">تاريخ الدخول</label>
-  <input type="datetime-local" class="form-control half ltr" id="exampleFormControlInput1" placeholder=" ادخل رقم الجوال " v-model="formdata.start">
-</div>
-  <div class="mb-3 input-in-con half">
-      <div v-if="this.err">
+
+  <div class="mb-3 input-in-con ">
+       <div v-if="this.err">
   <div v-if="this.err.end"  class="alert alert-danger" role="alert"> {{ this.err.end[0]}}</div>
 </div>
   <label for="exampleFormControlInput1" class="form-label">تاريخ الخروج</label>
-  <input type="datetime-local" class="form-control half ltr" id="exampleFormControlInput1" placeholder="ادخل رقم الجوال " v-model="formdata.end">
+  <input type="datetime-local" class="form-control  ltr" id="exampleFormControlInput1" placeholder="ادخل رقم الجوال " v-model="formdata.end">
 </div>
-</div>
+<div class="container">
+
 <div class="flex">
   
   <div class="mb-3 input-in-con half">
@@ -112,126 +142,114 @@
   <div v-if="this.err.directorates"  class="alert alert-danger" role="alert"> {{ this.err.directorates[0]}}</div>
 </div>
   <label for="exampleFormControlInput1" class="form-label">المديرية </label>
-  <input type="text"  class="form-control half" list="lis"  id="exampleFormControlInput1" placeholder="ادخل المديرية  " v-model="temdirectorates">
- <datalist id="lis" v-for="keyy in formdata4" :key="keyy.id">
+  <input type="text" @keyup="getinfo2" class="form-control half" list="lis"  id="exampleFormControlInput1" placeholder="ادخل المديرية  " v-model="temdirectorates">
+ <datalist id="lis" v-for="keyy in formdata3" :key="keyy.id">
     
       <option >{{keyy.name}}</option>
   </datalist>
 </div>
-
+</div>
 
 </div>
 
-
-
-
 <div class="flex last">
-  <button  class="btn btn-primary">اضافة</button>
+  <button ref="AddButton" class="btn btn-primary">
+    <looading v-if="load"/>
+    <span v-else>تعديل</span>
+  </button>
 </div>
       </form>
 
   </div>
-
-  
-
 </template>
 
 <script>
 import geturl from '../../composables/geturl'
-import moment from 'moment'
 import { useUserStore } from '@/stores/user'
-
+import moment from 'moment'
+import looading from '@/components/looading.vue'
 
 export default {
-name: 'updategue',
-props: ['idd'],
+name: 'updategue', 
+props: ['idd'], 
+components:{looading},
 data(){
   return{
-    
     formdata:{
       name: "",
-    phone: "",
-    family: "",
+    phone: "+967",
+    family: false,
     document: "",
     gender: "",
     nationality: "",
-    reservation: '',
+    reservation: null,
     number: '',
     start: '',
     end: '',
     hotel: '',
     directorates: '',
+    pic_document: '',
+    purpose: '',
+    number_pool: '',
+    number_hall: '',
     },
+  
     temdirectorates: '',
-
      formdata2:[],
      formdata3:[],
-     temformdata3:[],
      formdata4:[],
-     temformdata4:[],
-     work:false,
-          err:null,
-          user : useUserStore()
-
-
-    
+     formdata5:[],
+      err:null,
+      errList: [],
+      listt:[],
+      inc : 0,
+      ShowButton : false,
+      load: false,
+      user : useUserStore(),
+      is_hall: JSON.parse( localStorage.getItem('is_hall') ),
+      is_pool: JSON.parse( localStorage.getItem('is_pool') ),
+      pool: localStorage.getItem('pool'),
+      hall: localStorage.getItem('hall'),
+     
   }
-},
-methods: {
-  immg(){
-  var reader = new window.FileReader();
-  reader.readAsDataURL(this.$refs.file.files[0]);
-  reader.onload = ()=>{
-    var dataUrl = reader.result;
-           this.formdata.pic_document = dataUrl
 
+},
+mounted(){
+  
+  if(this.is_hall){
+  fetch(geturl()+"hotels/number_hall/?hall="+this.hall, {
+      
+      headers: {"Content-Type": "application/json",
+    "authorization": "Token "+this.user.token
+},      })
+    .then(res => res.json())
+    .then(data => {this.formdata5 = data
+    })
   }
-},
-    postinfo(){
 
-
-          this.temformdata4 = this.formdata4.filter((e) => {
-        return e.name === this.temdirectorates
-      })
-                if(this.temformdata4.length>0)
-                this.formdata.directorates =  this.temformdata4[0].id  
-                else
-                 this.formdata.directorates = this.temdirectorates == '' ? '' :'lorem ipsum'
-
-          
-            if(this.formdata.end == '')
-            this.formdata.end = null
-    fetch(geturl()+"guest/guest/"+this.idd+'/', {
-         method: "PUT",
+  if(this.is_pool){
+  fetch(geturl()+"hotels/number_pool/?pool="+this.pool, {
+      
+      headers: {"Content-Type": "application/json",
+    "authorization": "Token "+this.user.token
+},      })
+    .then(res => res.json())
+    .then(data => {this.formdata4 = data
+    })
+  }
+  fetch(geturl()+"guest/guest/"+this.idd+'/', {
          headers: {"Content-Type": "application/json",
       "authorization": "Token "+this.user.token
-},       body: JSON.stringify(this.formdata)
-      })
-      .then(res => res.json())
-      .then(data => { if(data.error){
-      this.err = data.error.details
-      }
-      else
-            this.$router.push({name:'GuestView' })
-      }) 
-    },
-    
 },
-mounted() {
-  
-        
-    
-       fetch(geturl()+"guest/guest/", {
-      
-        headers: {"Content-Type": "application/json",
-      "authorization": "Token "+this.user.token
-},       })
-      .then(res => res.json())
-      .then(data => {this.formdata2 = data
-           
-             this.formdata2 = this.formdata2.filter((e) => {
-        return e.id == this.idd
       })
+      .then(res => res.json())
+      .then(data => {
+            this.formdata5 = data
+
+            this.formdata.name = this.formdata5.name
+            this.formdata.directorates = this.formdata5.directorates
+            this.formdata.document = this.formdata5.document
+            this.formdata.end = this.formdata5.document
             this.formdata.hotel = this.user.hotel
             this.formdata.name = this.formdata2[0].name
             this.formdata.phone = this.formdata2[0].phone
@@ -246,23 +264,76 @@ mounted() {
           this.formdata.start=  moment( this.formdata.start ).format("YYYY-MM-DDTHH:mm")
             this.formdata.end = this.formdata2[0].end
             this.formdata.end=  moment( this.formdata.end ).format("YYYY-MM-DDTHH:mm")
-            this.temdirectorates = this.formdata2[0].directorates_name
-                     
 
-           
+      }) 
+},
+methods: {
+  
+   immg(){
+    
+  var reader = new window.FileReader();
+  reader.readAsDataURL(this.$refs.file.files[0]);
+  reader.onload = ()=>{
+    var dataUrl = reader.result;
+           this.formdata.pic_document = dataUrl
+
+  }
+},
+
+
+    postinfo(){
+      this.load = true
+
+      let dat = new Date()
+     this.formdata.start = moment(  dat.toISOString(dat.toLocaleString()) ).format("YYYY-MM-DDTHH:mm")
+
+      this.formdata3 = this.formdata3.filter((e) => {
+        return e.name === this.temdirectorates
       })
-
+       if(this.formdata3.length>0)
+       this.formdata.directorates =  this.formdata3[0].id 
+        else
+        this.formdata.directorates = this.temdirectorates == '' ? '' :'lorem ipsum'
      
+      if(this.formdata.end == '')
+            this.formdata.end = null
+            if(this.user.is_woner)
+            this.formdata.hotel = this.user.hotel
+    fetch(geturl()+"guest/guest/"+this.idd+'/', {
+         method: "PUT",
+         headers: {"Content-Type": "application/json",
+      "authorization": "Token "+this.user.token
+},
+      body: JSON.stringify(this.formdata)
+      })
+      .then(res => res.json())
+      .then(data => {
+        this.load = false
+         if(data.error){
+           this.err = data.error.details
+         }
+      else {
+           this.$router.push({name:'GuestView' })
+          }
+      }) 
+      
+    },
 
+    
+     getinfo2(){
        fetch(geturl()+"places/directorates/", {
       
         headers: {"Content-Type": "application/json",
       "authorization": "Token "+this.user.token
-},       })
-      .then(res => res.json())
-      .then(data => {this.formdata4 = data
+},
       })
-    },
+      .then(res => res.json())
+      .then(data => {this.formdata3 = data
+      })
+    }
+    
+
+  }
 }
 </script>
 
