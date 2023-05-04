@@ -54,11 +54,9 @@
     <div v-if="this.err.residential"  class="alert alert-danger" role="alert"> {{ this.err.residential[0]}}</div>
   </div>
     <label for="exampleFormControlInput1" class="form-label">مكان الاقامة </label>
-    <input type="text" @keyup="getinfo2" class="form-control half" list="lis"  id="exampleFormControlInput1" placeholder="ادخل مكان الاقامة  " v-model="temresidential">
-   <datalist id="lis" v-for="keyy in formdata3" :key="keyy.id">
-      
-        <option >{{keyy.name}}</option>
-    </datalist>
+    <select class="form-select half" aria-label="Default select example" v-model="formdata.residential">
+  <option v-for="keyy in formdata3" :key="keyy.id" :value="keyy.id">{{ keyy.name }} </option>
+   </select>
   </div>
   </div>
   
@@ -97,7 +95,6 @@
       residential: '',
       status:''
       },
-      temresidential: '',
        formdata3:[],
        formdata2:[],
         err:null,
@@ -115,13 +112,21 @@
 },      })
     .then(res => res.json())
     .then(data => {this.formdata2 = data
-
         this.formdata.name = this.formdata2.name
         this.formdata.status = this.formdata2.status
-        this.temresidential = this.formdata2.residential
+        this.formdata.residential = this.formdata2.residential
         this.formdata.phone = this.formdata2.phone
         this.formdata.docm = this.formdata2.docm
     })
+    fetch(geturl()+"places/residential/", {
+        
+        headers: {"Content-Type": "application/json",
+      "authorization": "Token "+this.user.token
+},
+      })
+      .then(res => res.json())
+      .then(data => {this.formdata3 = data
+      })
 },
   methods: {
     
@@ -138,16 +143,7 @@
   
       postinfo(){
         this.load = true
-  
-        this.formdata3 = this.formdata3.filter((e) => {
-          return e.name === this.temresidential
-        })
-         if(this.formdata3.length>0)
-         this.formdata.residential =  this.formdata3[0].id 
-          else
-          this.formdata.residential = this.temdirectorates == '' ? '' :'lorem ipsum'
-       
-          console.log(this.formdata.docm)
+
       fetch(geturl()+"hotels/owner/"+this.idd+'/', {
            method: "PUT",
            headers: {"Content-Type": "application/json",
@@ -166,19 +162,6 @@
             }
         }) 
       },
-  
-      
-       getinfo2(){
-         fetch(geturl()+"places/residential/", {
-        
-          headers: {"Content-Type": "application/json",
-        "authorization": "Token "+this.user.token
-  },
-        })
-        .then(res => res.json())
-        .then(data => {this.formdata3 = data
-        })
-      }
       
   }
   }

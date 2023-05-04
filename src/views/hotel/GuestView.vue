@@ -84,9 +84,9 @@
           <button  class="icon-button red"> <img src="../../assets/x.png" alt="" class="icon-small">
 </button>
         </form>
-         <!-- <router-link :to="{ name: 'updategue', params: { idd: keey.id}}"> <button   class="icon-button orange" > 
+         <router-link :to="{ name: 'updategue', params: { idd: keey.id}}"> <button   class="icon-button orange" > 
               <img src="../../assets/edit.png" alt="" class="icon-small">
-</button> </router-link> -->
+</button> </router-link>
 <!--
 <router-link :to="{ name: 'GuestPrint', params: { id: keey.id}}"> <button   class="icon-button orange" > 
 </button> </router-link> -->

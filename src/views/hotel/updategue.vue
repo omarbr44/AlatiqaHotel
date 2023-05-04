@@ -142,11 +142,10 @@
   <div v-if="this.err.directorates"  class="alert alert-danger" role="alert"> {{ this.err.directorates[0]}}</div>
 </div>
   <label for="exampleFormControlInput1" class="form-label">المديرية </label>
-  <input type="text" @keyup="getinfo2" class="form-control half" list="lis"  id="exampleFormControlInput1" placeholder="ادخل المديرية  " v-model="temdirectorates">
- <datalist id="lis" v-for="keyy in formdata3" :key="keyy.id">
-    
-      <option >{{keyy.name}}</option>
-  </datalist>
+  <select class="form-select half" aria-label="Default select example" v-model="formdata.directorates">
+  <option v-for="keyy in formdata3" :key="keyy.id" :value="keyy.id">{{ keyy.name }} </option>
+   </select>
+
 </div>
 </div>
 
@@ -193,12 +192,11 @@ data(){
     number_pool: '',
     number_hall: '',
     },
-  
-    temdirectorates: '',
-     formdata2:[],
+       formdata2:[],
      formdata3:[],
      formdata4:[],
      formdata5:[],
+     formdata6:[],
       err:null,
       errList: [],
       listt:[],
@@ -215,6 +213,15 @@ data(){
 
 },
 mounted(){
+  fetch(geturl()+"places/directorates/", {
+      
+      headers: {"Content-Type": "application/json",
+    "authorization": "Token "+this.user.token
+},
+    })
+    .then(res => res.json())
+    .then(data => {this.formdata3 = data
+    })
   
   if(this.is_hall){
   fetch(geturl()+"hotels/number_hall/?hall="+this.hall, {
@@ -244,25 +251,24 @@ mounted(){
       })
       .then(res => res.json())
       .then(data => {
-            this.formdata5 = data
+            this.formdata6 = data
 
-            this.formdata.name = this.formdata5.name
-            this.formdata.directorates = this.formdata5.directorates
-            this.formdata.document = this.formdata5.document
-            this.formdata.end = this.formdata5.document
-            this.formdata.hotel = this.user.hotel
-            this.formdata.name = this.formdata2[0].name
-            this.formdata.phone = this.formdata2[0].phone
-            this.formdata.family = this.formdata2[0].family
-            this.formdata.document = this.formdata2[0].document
-            this.formdata.pic_document = this.formdata2[0].pic_document
-            this.formdata.gender = this.formdata2[0].gender
-            this.formdata.nationality = this.formdata2[0].nationality
-            this.formdata.reservation = this.formdata2[0].reservation
-            this.formdata.number = this.formdata2[0].number
-            this.formdata.start = this.formdata2[0].start
+            this.formdata.name = this.formdata6.name
+            this.formdata.directorates = this.formdata6.directorates
+            this.formdata.document = this.formdata6.document
+            this.formdata.end = this.formdata6.document
+            this.formdata.phone = this.formdata6.phone
+            this.formdata.family = this.formdata6.family
+            this.formdata.pic_document = this.formdata6.pic_document
+            this.formdata.gender = this.formdata6.gender
+            this.formdata.nationality = this.formdata6.nationality
+            this.formdata.reservation = this.formdata6.reservation
+            this.formdata.number = this.formdata6.number
+            this.formdata.start = this.formdata6.start
+            this.formdata.purpose = this.formdata6.purpose
+            this.formdata.number_hall = this.formdata6.number_hall
+            this.formdata.number_pool = this.formdata6.number_pool
           this.formdata.start=  moment( this.formdata.start ).format("YYYY-MM-DDTHH:mm")
-            this.formdata.end = this.formdata2[0].end
             this.formdata.end=  moment( this.formdata.end ).format("YYYY-MM-DDTHH:mm")
 
       }) 
@@ -287,14 +293,6 @@ methods: {
       let dat = new Date()
      this.formdata.start = moment(  dat.toISOString(dat.toLocaleString()) ).format("YYYY-MM-DDTHH:mm")
 
-      this.formdata3 = this.formdata3.filter((e) => {
-        return e.name === this.temdirectorates
-      })
-       if(this.formdata3.length>0)
-       this.formdata.directorates =  this.formdata3[0].id 
-        else
-        this.formdata.directorates = this.temdirectorates == '' ? '' :'lorem ipsum'
-     
       if(this.formdata.end == '')
             this.formdata.end = null
             if(this.user.is_woner)
@@ -318,21 +316,6 @@ methods: {
       }) 
       
     },
-
-    
-     getinfo2(){
-       fetch(geturl()+"places/directorates/", {
-      
-        headers: {"Content-Type": "application/json",
-      "authorization": "Token "+this.user.token
-},
-      })
-      .then(res => res.json())
-      .then(data => {this.formdata3 = data
-      })
-    }
-    
-
   }
 }
 </script>
